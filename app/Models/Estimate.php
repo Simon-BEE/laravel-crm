@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Reply extends Model
+class Estimate extends Model
 {
     protected $guarded = ['id'];
 
     // RELATIONS
 
-    public function ticket()
+    public function project()
     {
         return $this->belongsTo(Ticket::class);
     }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -15,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password', 'role_id'
+        'firstname', 'lastname', 'email', 'password', 'role_id', 'address', 'know'
     ];
 
     /**
@@ -36,6 +37,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // SCOPES
+
+    public function scopeCustomers($query)
+    {
+        return $query->where('id', '!=', auth()->id())->with('projects');
+    }
+
+    // ATTRIBUTES
+
     public function getNameAttribute()
     {
         return $this->firstname . ' ' . $this->lastname;
@@ -51,16 +61,35 @@ class User extends Authenticatable
         return $this->role->name === 'customer';
     }
 
-
     // RELATIONS
 
-    /**
-     * Return role relation data
-     *
-     * @return void
-     */
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
+    public function tickets()
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Reply::class);
+    }
+
+    public function estimates()
+    {
+        return $this->hasMany(Estimate::class);
+    }
+
+    public function invoices()
+    {
+        return $this->hasMany(Invoice::class);
     }
 }

@@ -17,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes(['register' => false]);
+
+Route::middleware(['auth', 'manager'])->group(function(){
+    Route::resource('customers', 'CustomerController');
+});

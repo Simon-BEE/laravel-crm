@@ -65,16 +65,15 @@
                                 <div class="sb-nav-link-icon">
                                     <i class="fas fa-users"></i>
                                 </div>
-                                Utilisateurs
+                                Clients
                                 <div class="sb-sidenav-collapse-arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </div>
                             </a>
                             <div class="collapse" id="collapseUsers" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Ajouter un utilisateur</a>
-                                    <a class="nav-link" href="#">Liste de tous les utilisateurs</a>
-                                    <a class="nav-link" href="#">Gestion des rôles</a>
+                                    <a class="nav-link" href="{{ route('customers.create') }}">Ajouter un client</a>
+                                    <a class="nav-link" href="{{ route('customers.index') }}">Liste de tous les clients</a>
                                 </nav>
                             </div>
                             <!-- -->

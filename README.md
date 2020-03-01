@@ -13,3 +13,7 @@ Projet personnel qui a pour objectif de créer une structure permettant de gére
 * Affichage de tous les log (tous les mouvements sur l'application répertoriés)
 
 ------------------------------------------
+
+## Infos
+
+* Gestion des status

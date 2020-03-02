@@ -33,15 +33,17 @@
                         <div class="bg-info text-white mb-5 rounded">
                             <h5 class="card-title p-2">Projets</h5>
                         </div>
-                        <ul class="list-group list-group-flush">
+                        <div class="list-group">
                             @if (!$customer->projects->isEmpty())
                                 @foreach ($customer->projects as $project)
-                                    <li class="list-group-item">{{ $project->name }}</li>
+                                    <a href="{{ route('projects.show', $project) }}" class="list-group-item list-group-item-action">
+                                        {{ $project->name }}
+                                    </a>
                                 @endforeach
                             @else
-                                <li class="list-group-item">Aucun projet lié à ce client.</li>
+                                <p class="list-group-item">Aucun projet lié à ce client.</p>
                             @endif
-                        </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer text-muted">

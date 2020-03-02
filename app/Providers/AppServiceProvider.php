@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\User;
 use App\Observers\UserObserver;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use App\Console\Commands\ModelMakeCommand;
 
@@ -31,5 +32,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         User::observe(UserObserver::class);
+
+        Blade::if('manager', function(){
+            return auth()->check() && auth()->user()->manager;
+        });
     }
 }

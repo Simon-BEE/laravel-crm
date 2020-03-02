@@ -8,6 +8,15 @@ class Project extends Model
 {
     protected $guarded = ['id'];
 
+    public function getActualStatusAttribute()
+    {
+        $status = $this->status->name;
+
+        $color = ($status === 'Terminé') ? 'info' : (($status === 'Abandonné') ? 'danger' : (($status === 'En développement') ? 'success' : 'secondary'));
+
+        return "<span class='badge badge-$color'>$status</span>";
+    }
+
     // RELATIONS
 
     public function estimates()

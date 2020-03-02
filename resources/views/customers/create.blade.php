@@ -10,6 +10,7 @@
 @endsection
 
 @section('content')
+<h2 class="mt-4">Formulaire d'ajout d'un client</h1>
 
 <div class="container">
     <form action="{{ route('customers.store') }}" method="post">

@@ -6,7 +6,6 @@ use App\Http\Requests\CustomerRequest;
 use App\Mail\SendPasswordMail;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 class CustomerController extends Controller

@@ -13,7 +13,8 @@
         "intervention/image": "^2.5",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^1.2"
+        "laravel/ui": "^1.2",
+        "te7a-houdini/laravel-trix": "^1.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

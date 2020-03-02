@@ -16,6 +16,7 @@
         <link href="{{ asset('css/app.css') }} " rel="stylesheet" />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
+        @yield('css')
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark shadow border-bottom border-dark">
@@ -54,7 +55,6 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-
                             <div class="sb-sidenav-menu-heading">Core</div>
                             <a class="nav-link" href="/">
                                 <div class="sb-nav-link-icon">
@@ -62,112 +62,113 @@
                                 </div>
                                 Dashboard
                             </a>
-
+                            @manager
                             <div class="sb-sidenav-menu-heading">Données</div>
-                            <!-- -->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fas fa-users"></i>
+                                <!-- -->
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    Clients
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <div class="collapse" id="collapseUsers" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="{{ route('customers.create') }}">Ajouter un client</a>
+                                        <a class="nav-link" href="{{ route('customers.index') }}">Liste de tous les clients</a>
+                                    </nav>
                                 </div>
-                                Clients
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
+                                <!-- -->
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProjects" aria-expanded="false" aria-controls="collapseProjects">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-project-diagram"></i>
+                                    </div>
+                                    Projets
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <div class="collapse" id="collapseProjects" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="{{ route('projects.create') }}">Créer un projet</a>
+                                        <a class="nav-link" href="{{ route('projects.index') }}">Liste de tous les projets</a>
+                                        <a class="nav-link" href="#">Gérer les statuts</a>
+                                    </nav>
                                 </div>
-                            </a>
-                            <div class="collapse" id="collapseUsers" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="{{ route('customers.create') }}">Ajouter un client</a>
-                                    <a class="nav-link" href="{{ route('customers.index') }}">Liste de tous les clients</a>
-                                </nav>
+                                <!-- -->
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTickets" aria-expanded="false" aria-controls="collapseTickets">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-archive"></i>
+                                    </div>
+                                    Tickets
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <div class="collapse" id="collapseTickets" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="#">Créer un ticket</a>
+                                        <a class="nav-link" href="#">Liste de tous les tickets</a>
+                                        <a class="nav-link" href="#">Gérer les statuts</a>
+                                    </nav>
+                                </div>
+                                <!-- -->
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstimates" aria-expanded="false" aria-controls="collapseEstimates">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-copy"></i>
+                                    </div>
+                                    Devis
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <div class="collapse" id="collapseEstimates" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="#">Créer un devis</a>
+                                        <a class="nav-link" href="#">Liste de tous les devis</a>
+                                    </nav>
+                                </div>
+                                <!-- -->
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInvoices" aria-expanded="false" aria-controls="collapseInvoices">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-wallet"></i>
+                                    </div>
+                                    Factures
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <div class="collapse" id="collapseInvoices" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="#">Créer une facture</a>
+                                        <a class="nav-link" href="#">Liste de toutes les factures</a>
+                                    </nav>
+                                </div>
+                                <!-- -->
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-archive"></i>
+                                    </div>
+                                    Archives
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <div class="collapse" id="collapseArchive" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="#">Clients</a>
+                                        <a class="nav-link" href="#">Tickets</a>
+                                        <a class="nav-link" href="#">Projets</a>
+                                        <a class="nav-link" href="#">Devis</a>
+                                        <a class="nav-link" href="#">Facture</a>
+                                    </nav>
+                                </div>
+                                <!-- -->
+                                @endmanager
                             </div>
-                            <!-- -->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProjects" aria-expanded="false" aria-controls="collapseProjects">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fas fa-project-diagram"></i>
-                                </div>
-                                Projets
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <div class="collapse" id="collapseProjects" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Créer un projet</a>
-                                    <a class="nav-link" href="#">Liste de tous les projets</a>
-                                    <a class="nav-link" href="#">Gérer les statuts</a>
-                                </nav>
-                            </div>
-                            <!-- -->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTickets" aria-expanded="false" aria-controls="collapseTickets">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fas fa-archive"></i>
-                                </div>
-                                Tickets
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <div class="collapse" id="collapseTickets" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Créer un ticket</a>
-                                    <a class="nav-link" href="#">Liste de tous les tickets</a>
-                                    <a class="nav-link" href="#">Gérer les statuts</a>
-                                </nav>
-                            </div>
-                            <!-- -->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstimates" aria-expanded="false" aria-controls="collapseEstimates">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fas fa-copy"></i>
-                                </div>
-                                Devis
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <div class="collapse" id="collapseEstimates" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Créer un devis</a>
-                                    <a class="nav-link" href="#">Liste de tous les devis</a>
-                                </nav>
-                            </div>
-                            <!-- -->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInvoices" aria-expanded="false" aria-controls="collapseInvoices">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fas fa-wallet"></i>
-                                </div>
-                                Factures
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <div class="collapse" id="collapseInvoices" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Créer une facture</a>
-                                    <a class="nav-link" href="#">Liste de toutes les factures</a>
-                                </nav>
-                            </div>
-                            <!-- -->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive">
-                                <div class="sb-nav-link-icon">
-                                    <i class="fas fa-archive"></i>
-                                </div>
-                                Archives
-                                <div class="sb-sidenav-collapse-arrow">
-                                    <i class="fas fa-angle-down"></i>
-                                </div>
-                            </a>
-                            <div class="collapse" id="collapseArchive" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-                                <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Clients</a>
-                                    <a class="nav-link" href="#">Tickets</a>
-                                    <a class="nav-link" href="#">Projets</a>
-                                    <a class="nav-link" href="#">Devis</a>
-                                    <a class="nav-link" href="#">Facture</a>
-                                </nav>
-                            </div>
-                            <!-- -->
                         </div>
-                    </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Connecté en tant que :</div>
                         {{ auth()->user()->name }}
@@ -186,11 +187,11 @@
                         </div>
                     @endif
                     <div class="container-fluid">
-                        <h1 class="mt-4">Dashboard</h1>
-                        <ol class="breadcrumb mb-4">
+                        <ol class="breadcrumb my-4">
                             <li class="breadcrumb-item"><a href="/" class="text-info">Dashboard</a></li>
                             @yield('breadcrumb')
                         </ol>
+                        <hr>
                         @yield('content')
 
                     </div>

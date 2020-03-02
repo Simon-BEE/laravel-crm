@@ -14,10 +14,10 @@ class StatusTableSeeder extends Seeder
     public function run()
     {
         // Status for project
-        StatusProject::create(['name' => 'Abandonné']);
         StatusProject::create(['name' => 'En développement']);
         StatusProject::create(['name' => 'En attente']);
         StatusProject::create(['name' => 'Terminé']);
+        StatusProject::create(['name' => 'Abandonné']);
 
         // Status for ticket
         StatusTicket::create(['name' => 'En cours']);

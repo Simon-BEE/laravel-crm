@@ -10,6 +10,7 @@
 @endsection
 
 @section('content')
+<h2 class="mt-4">Formulaire d'édition d'un client</h1>
 
     <div class="row justify-content-end">
         @if (!$customer->know)

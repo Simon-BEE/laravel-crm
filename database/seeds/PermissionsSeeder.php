@@ -25,6 +25,14 @@ class PermissionsSeeder extends Seeder
             'role_id' => $managerRole->id,
         ]);
 
+        User::create([
+            'firstname' => 'André',
+            'lastname' => 'Testor',
+            'email' => 'dédé@gmail.com',
+            'password' => Hash::make('123123'),
+            'role_id' => $customerRole->id,
+        ]);
+
         factory(User::class, 30)->create();
     }
 }

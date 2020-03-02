@@ -5,7 +5,7 @@
 @endsection
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('customers.index') }}">Liste des clients</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('customers.index') }}" class="text-info">Liste des clients</a></li>
     <li class="breadcrumb-item">Ajout d'un nouveau client</li>
 @endsection
 

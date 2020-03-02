@@ -19,5 +19,10 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes(['register' => false]);
 
 Route::middleware(['auth', 'manager'])->group(function(){
+    // Customers
     Route::resource('customers', 'CustomerController');
+    Route::get('customers/{user}/password', 'CustomerController@sendPassword')->name('customers.send_password');
+
+    // Projects
+    Route::resource('projects', 'ProjectController');
 });

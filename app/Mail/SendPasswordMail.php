@@ -36,6 +36,7 @@ class SendPasswordMail extends Mailable
         $password = Str::random(8);
         $this->user->update(['password' => Hash::make($password)]);
         $this->user->save();
+
         return $this->markdown('emails.send-password', [
             'name' => $this->user->name,
             'password' => $password,

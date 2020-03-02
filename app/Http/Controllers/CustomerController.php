@@ -49,7 +49,7 @@ class CustomerController extends Controller
         $message = 'Le client a bien été enregistré en base de données.';
 
         if ($request->know) {
-            Mail::to($user->email)->send(new SendPasswordMail($user));
+            $this->passwordToEmail($user);
             $message = $message . ' Un email avec un mot de passe lui a été envoyé.';
         }
 
@@ -62,41 +62,47 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $customer
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(User $customer)
     {
-        //
+        $customer->load('projects');
+        return view('customers.show', compact('customer'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $customer
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(User $customer)
     {
-        //
+        return view('customers.edit', compact('customer'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  App\Http\Requests\CustomerRequest  $request
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $customer
      * @return \Illuminate\Http\Response
      */
-    public function update(CustomerRequest $request, User $user)
+    public function update(CustomerRequest $request, User $customer)
     {
-        //
+        $customer->update($request->all());
+
+        return redirect()->route('customers.show', $customer)->with([
+            'alertType' => 'success',
+            'alertMessage' => "Le client $customer->name a bien été modifié.",
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\User  $user
+     * @param  \App\Models\User  $customer
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $customer)
@@ -105,7 +111,41 @@ class CustomerController extends Controller
 
         return redirect()->route('customers.index')->with([
             'alertType' => 'success',
-            'alertMessage' => 'Le client a bien été supprimé.',
+            'alertMessage' => "Le client $customer->name a bien été supprimé.",
         ]);
+    }
+
+    /**
+     * Set know to true and send a password by email
+     *
+     * @param User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function sendPassword(User $user)
+    {
+        if (!$user->know) {
+            $this->passwordToEmail($user);
+            $user->know = true;
+            $user->save();
+
+            $type = "success";
+            $message ="Un email content un mot de passe a bien été envoyé à $user->name.";
+        }
+
+        return redirect()->route('customers.index')->with([
+            'alertType' => $type ?? 'danger',
+            'alertMessage' => $message ?? "Le client $user->name a déjà reçu son mot de passe.",
+        ]);
+    }
+
+    /**
+     * Just call mailable SendPasswordMail
+     *
+     * @param User $user
+     * @return void
+     */
+    private function passwordToEmail(User $user)
+    {
+        Mail::to($user->email)->send(new SendPasswordMail($user));
     }
 }

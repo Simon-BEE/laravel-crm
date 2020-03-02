@@ -13,12 +13,16 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
         <!-- Styles -->
         <link href="{{ asset('css/styles.css') }} " rel="stylesheet" />
+        <link href="{{ asset('css/app.css') }} " rel="stylesheet" />
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/js/all.min.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
-        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-            <a class="navbar-brand" href="/">{{ config('app.name', 'Laravel') }} / Admin</a><button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i class="fas fa-bars"></i></button
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark shadow border-bottom border-dark">
+            <a class="navbar-brand" href="/">{{ config('app.name', 'Laravel') }} / Admin</a>
+            <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+                <i class="fas fa-bars"></i>
+            </button
             ><!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
                 <div class="input-group">
@@ -77,21 +81,88 @@
                                 </nav>
                             </div>
                             <!-- -->
-                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducts" aria-expanded="false" aria-controls="collapseProducts">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProjects" aria-expanded="false" aria-controls="collapseProjects">
                                 <div class="sb-nav-link-icon">
-                                    <i class="fas fa-cubes"></i>
+                                    <i class="fas fa-project-diagram"></i>
                                 </div>
-                                Produits
+                                Projets
                                 <div class="sb-sidenav-collapse-arrow">
                                     <i class="fas fa-angle-down"></i>
                                 </div>
                             </a>
-                            <div class="collapse" id="collapseProducts" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                            <div class="collapse" id="collapseProjects" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="#">Ajouter un produit</a>
-                                    <a class="nav-link" href="#">Liste de tous les produits</a>
-                                    <a class="nav-link" href="#">Ajouter un tag</a>
-                                    <a class="nav-link" href="#">Gestion des stocks</a>
+                                    <a class="nav-link" href="#">Créer un projet</a>
+                                    <a class="nav-link" href="#">Liste de tous les projets</a>
+                                    <a class="nav-link" href="#">Gérer les statuts</a>
+                                </nav>
+                            </div>
+                            <!-- -->
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTickets" aria-expanded="false" aria-controls="collapseTickets">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-archive"></i>
+                                </div>
+                                Tickets
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseTickets" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="#">Créer un ticket</a>
+                                    <a class="nav-link" href="#">Liste de tous les tickets</a>
+                                    <a class="nav-link" href="#">Gérer les statuts</a>
+                                </nav>
+                            </div>
+                            <!-- -->
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseEstimates" aria-expanded="false" aria-controls="collapseEstimates">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-copy"></i>
+                                </div>
+                                Devis
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseEstimates" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="#">Créer un devis</a>
+                                    <a class="nav-link" href="#">Liste de tous les devis</a>
+                                </nav>
+                            </div>
+                            <!-- -->
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseInvoices" aria-expanded="false" aria-controls="collapseInvoices">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                Factures
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseInvoices" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="#">Créer une facture</a>
+                                    <a class="nav-link" href="#">Liste de toutes les factures</a>
+                                </nav>
+                            </div>
+                            <!-- -->
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-archive"></i>
+                                </div>
+                                Archives
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
+                            </a>
+                            <div class="collapse" id="collapseArchive" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="#">Clients</a>
+                                    <a class="nav-link" href="#">Tickets</a>
+                                    <a class="nav-link" href="#">Projets</a>
+                                    <a class="nav-link" href="#">Devis</a>
+                                    <a class="nav-link" href="#">Facture</a>
                                 </nav>
                             </div>
                             <!-- -->
@@ -117,7 +188,7 @@
                     <div class="container-fluid">
                         <h1 class="mt-4">Dashboard</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                            <li class="breadcrumb-item"><a href="/" class="text-info">Dashboard</a></li>
                             @yield('breadcrumb')
                         </ol>
                         @yield('content')
@@ -141,5 +212,7 @@
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
         <script src="js/scripts.js"></script>
+        @yield('modal')
+        @yield('javascript')
     </body>
 </html>

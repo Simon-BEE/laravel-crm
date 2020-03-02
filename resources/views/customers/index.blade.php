@@ -33,21 +33,43 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->address }}</td>
                         <td class="">
-                            <a href="{{ route('customers.edit', $user) }}" class="mr-2"><i class="fas fa-paint-brush"></i></a>
-                            <form action="{{ route('customers.destroy', $user) }}" method="post" style="display:inline-block;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-link">
-                                    <i class="fas fa-trash-alt"></i>
+                            <div class="dropdown">
+                                <button class="btn btn-link text-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fas fa-ellipsis-v"></i>
                                 </button>
-                            </form>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+
+                                    @if (!$user->know)
+                                        <a class="dropdown-item" href="{{ route('customers.send_password', $user) }}">
+                                            <i class="fas fa-key"></i> <span class="ml-3">Envoyer son mot de passe</span>
+                                        </a>
+                                    @endif
+
+                                    <a class="dropdown-item" href="{{ route('customers.show', $user) }}">
+                                        <i class="far fa-eye"></i> <span class="ml-3">Voir</span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('customers.edit', $user) }}">
+                                        <i class="fas fa-paint-brush"></i> <span class="ml-3">Editer</span>
+                                    </a>
+                                    <form action="{{ route('customers.destroy', $user) }}" method="post" class="dropdown-item" onsubmit="confirmAction(event)">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-link p-0 text-danger">
+                                            <i class="fas fa-trash-alt"></i>
+                                            <span class="ml-3">Supprimer</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
-    <div class="row">
+    <div class="row justify-content-center my-3">
         {{ $users->links() }}
     </div>
+    @include('includes.delete-modal')
 @endsection
+

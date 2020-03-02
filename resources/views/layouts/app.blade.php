@@ -94,7 +94,7 @@
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="{{ route('projects.create') }}">Créer un projet</a>
                                         <a class="nav-link" href="{{ route('projects.index') }}">Liste de tous les projets</a>
-                                        <a class="nav-link" href="#">Gérer les statuts</a>
+                                        <a class="nav-link" href="{{ route('status.projects.index') }}">Gérer les statuts</a>
                                     </nav>
                                 </div>
                                 <!-- -->
@@ -111,7 +111,7 @@
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="#">Créer un ticket</a>
                                         <a class="nav-link" href="#">Liste de tous les tickets</a>
-                                        <a class="nav-link" href="#">Gérer les statuts</a>
+                                        <a class="nav-link" href="{{ route('status.tickets.index') }}">Gérer les statuts</a>
                                     </nav>
                                 </div>
                                 <!-- -->

@@ -25,4 +25,22 @@ Route::middleware(['auth', 'manager'])->group(function(){
 
     // Projects
     Route::resource('projects', 'ProjectController');
+
+    // Status
+    Route::resource('status/project', 'StatusProjectController')
+        ->except(['edit', 'update', 'show'])
+        ->names([
+            'create' => 'status.projects.create',
+            'index' => 'status.projects.index',
+            'store' => 'status.projects.store',
+            'destroy' => 'status.projects.destroy',
+    ]);
+    Route::resource('status/ticket', 'StatusTicketController')
+        ->except(['edit', 'update', 'show'])
+        ->names([
+            'create' => 'status.tickets.create',
+            'index' => 'status.tickets.index',
+            'store' => 'status.tickets.store',
+            'destroy' => 'status.tickets.destroy',
+    ]);
 });

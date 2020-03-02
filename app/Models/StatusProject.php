@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class StatusProject extends Model
 {
-    //
+    protected $fillable = ['name'];
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
 }

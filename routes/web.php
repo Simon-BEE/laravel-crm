@@ -43,4 +43,16 @@ Route::middleware(['auth', 'manager'])->group(function(){
             'store' => 'status.tickets.store',
             'destroy' => 'status.tickets.destroy',
     ]);
+
+    // Archives
+    Route::prefix('archives')->group(function () {
+        // Customers
+        Route::get('customers', 'CustomerTrashController@index')->name('archives.customers.index');
+        Route::patch('customers/{id}', 'CustomerTrashController@restore')->name('archives.customers.restore');
+        Route::delete('customers/{id}', 'CustomerTrashController@destroy')->name('archives.customers.destroy');
+        // Projects
+        Route::get('projects', 'ProjectTrashController@index')->name('archives.projects.index');
+        Route::patch('projects/{id}', 'ProjectTrashController@restore')->name('archives.projects.restore');
+        Route::delete('projects/{id}', 'ProjectTrashController@destroy')->name('archives.projects.destroy');
+    });
 });

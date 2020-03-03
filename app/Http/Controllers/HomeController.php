@@ -25,12 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $invoice['id'] = 256984;
+        // $invoice['id'] = 256984;
 
         // $pdf = App::make('dompdf.wrapper');
         // $pdf->loadView('pdf.invoice', $invoice);
         // // $pdf->save(public_path() . '/invoices/invoice.pdf');
         // return $pdf->stream();
-        return view('pdf.invoice');
+        return view('home');
     }
 }

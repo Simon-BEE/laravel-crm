@@ -2,13 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Askedio\SoftCascade\Traits\SoftCascadeTrait;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SoftDeletes, SoftCascadeTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -37,6 +39,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The relations must be deleted in cascade with softDeleting.
+     *
+     * @var array
+     */
+    protected $softCascade = ['projects', 'tickets', 'replies'];
+
     // SCOPES
 
     public function scopeCustomers($query)
@@ -59,6 +68,11 @@ class User extends Authenticatable
     public function getCustomerAttribute()
     {
         return $this->role->name === 'customer';
+    }
+
+    public function getIsDeleteAttribute()
+    {
+        return $this->deleted_at ?? false;
     }
 
     // RELATIONS

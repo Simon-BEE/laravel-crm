@@ -23,7 +23,7 @@ class CreateTicketsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('project_id')->references('id')->on('projects');
             $table->foreign('status_id')->references('id')->on('status_tickets');
         });

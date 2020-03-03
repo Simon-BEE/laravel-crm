@@ -158,9 +158,9 @@
                                 </a>
                                 <div class="collapse" id="collapseArchive" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="#">Clients</a>
+                                        <a class="nav-link" href="{{ route('archives.customers.index') }}">Clients</a>
                                         <a class="nav-link" href="#">Tickets</a>
-                                        <a class="nav-link" href="#">Projets</a>
+                                        <a class="nav-link" href="{{ route('archives.projects.index') }}">Projets</a>
                                         <a class="nav-link" href="#">Devis</a>
                                         <a class="nav-link" href="#">Facture</a>
                                     </nav>

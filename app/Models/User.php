@@ -50,6 +50,11 @@ class User extends Authenticatable
 
     public function scopeCustomers($query)
     {
+        return $query->where('id', '!=', auth()->id());
+    }
+
+    public function scopeCustomersWithProjects($query)
+    {
         return $query->where('id', '!=', auth()->id())->with('projects');
     }
 

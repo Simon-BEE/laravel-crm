@@ -11,6 +11,8 @@ class Project extends Model
 
     protected $guarded = ['id'];
 
+    protected $with = ['user', 'status'];
+
     public function getActualStatusAttribute()
     {
         $status = $this->status->name;

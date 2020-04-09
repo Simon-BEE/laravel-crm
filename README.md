@@ -24,3 +24,7 @@ Projet personnel qui a pour objectif de créer une structure permettant de gére
 * SoftDeletes. Avec une corbeille permettant de restaurer ou de supprimer définitivement un élément.
 * Affichage des logs de l'application.
 * Calendrier, avec mise en place d'événements.
+
+## Todo
+
+- [ ] 

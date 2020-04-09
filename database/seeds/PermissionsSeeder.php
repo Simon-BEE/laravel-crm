@@ -23,7 +23,7 @@ class PermissionsSeeder extends Seeder
             'email' => 'simonbee1303@gmail.com',
             'password' => Hash::make('123123'),
             'role_id' => $adminRole->id,
-            'know' => true,
+            'knew' => true,
         ]);
 
         User::create([

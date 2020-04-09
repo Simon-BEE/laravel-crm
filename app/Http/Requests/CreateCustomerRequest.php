@@ -27,7 +27,7 @@ class CreateCustomerRequest extends FormRequest
             'user.firstname' => 'required|string|max:255',
             'user.lastname' => 'required|string|max:255',
             'user.email' => 'required|email|max:255|unique:users,email',
-            'user.know' => 'boolean',
+            'user.knew' => 'boolean',
             'address.phone_1' => 'required|digits_between:10,12',
             'address.phone_2' => 'digits_between:10,12|nullable',
             'address.address_1' => 'required|string|max:255',

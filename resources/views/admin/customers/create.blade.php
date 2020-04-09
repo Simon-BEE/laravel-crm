@@ -149,8 +149,8 @@
         <hr>
 
         <div class="form-check">
-            <input type="checkbox" class="form-check-input" id="know" name="user[know]" value=1>
-            <label class="form-check-label ml-2" for="know">Lui envoyer un mot de passe ?</label>
+            <input type="checkbox" class="form-check-input" id="knew" name="user[knew]" value=1>
+            <label class="form-check-label ml-2" for="knew">Lui envoyer un mot de passe ?</label>
         </div>
 
         <hr>

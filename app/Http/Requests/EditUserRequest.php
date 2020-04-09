@@ -35,7 +35,7 @@ class EditUserRequest extends FormRequest
                     'max:255',
                     Rule::unique('users', 'email')->ignore($this->userId),
             ],
-            'user.know' => 'boolean',
+            'user.knew' => 'boolean',
             'address.phone_1' => 'required|digits_between:10,12',
             'address.phone_2' => 'digits_between:10,12|nullable',
             'address.address_1' => 'required|string|max:255',

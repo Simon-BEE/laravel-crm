@@ -13,7 +13,7 @@
 <h2 class="mt-4">Formulaire d'édition d'un client</h1>
 
     <div class="row justify-content-end">
-        @if (!$customer->know)
+        @if (!$customer->knew)
             <div class="col-6 col-md-2">
                 <a class="btn btn-dark" href="{{ route('admin.customers.send_password', $customer) }}">
                     <i class="fas fa-key"></i> <span class="ml-3">Envoyer son mot de passe</span>

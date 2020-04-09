@@ -169,12 +169,22 @@
                             @endadmin
                             <div class="sb-sidenav-menu-heading">Compte</div>
                             <!-- -->
-                            <a class="nav-link" href="@admin {{ route('admin.account.index') }} @else {{ route('customer.account.index') }} @endadmin">
+                            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccount" aria-expanded="false" aria-controls="collapseAccount">
                                 <div class="sb-nav-link-icon">
                                     <i class="fas fa-user-cog"></i>
                                 </div>
                                 Modifier
+                                <div class="sb-sidenav-collapse-arrow">
+                                    <i class="fas fa-angle-down"></i>
+                                </div>
                             </a>
+                            <div class="collapse" id="collapseAccount" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                <nav class="sb-sidenav-menu-nested nav">
+                                    <a class="nav-link" href="@admin {{ route('admin.account.edit') }} @else {{ route('customer.account.edit') }} @endadmin">Informations personnelles</a>
+                                    <a class="nav-link" href="@admin {{ route('admin.account.password') }} @else {{ route('customer.account.password') }} @endadmin">Mot de passe</a>
+                                </nav>
+                            </div>
+                            <!-- -->
                             <a class="nav-link" href="@admin {{ route('admin.home') }} @else {{ route('customer.home') }} @endadmin">
                                 <div class="sb-nav-link-icon">
                                     <i class="fas fa-sliders-h"></i>
@@ -209,6 +219,13 @@
                         <hr>
                         @yield('content')
 
+                        @if (!auth()->user()->changed)
+                        <div class="fixed-bottom text-center">
+                            <div class="alert alert-dismissible alert-danger">
+                                <p class="mb-0">Nous vous invitons à <a class="text-danger font-weight-bold" href="{{ route('customer.account.password') }}">modifier votre mot de passe</a>.</p>
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </main>
                 <footer class="py-4 bg-light mt-auto">

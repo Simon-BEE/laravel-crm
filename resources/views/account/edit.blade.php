@@ -9,10 +9,10 @@
 @endsection
 
 @section('content')
-<h2 class="mt-4">Formulaire de modification</h1>
+<h2 class="mt-4">Formulaire d'édition de ses informations</h1>
 
 <div class="container">
-    <form action="{{ route('admin.account.update') }}" method="post" class="mb-3">
+    <form action="" method="post" class="mb-3">
         @csrf
         @method('PATCH')
 

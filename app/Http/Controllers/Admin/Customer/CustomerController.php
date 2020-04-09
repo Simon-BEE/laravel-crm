@@ -50,7 +50,7 @@ class CustomerController extends Controller
 
         $message = 'Le client a bien été enregistré en base de données.';
 
-        if ($request->know) {
+        if ($request->knew) {
             $this->passwordToEmail($user);
             $message = $message . ' Un email avec un mot de passe lui a été envoyé.';
         }
@@ -118,16 +118,16 @@ class CustomerController extends Controller
     }
 
     /**
-     * Set know to true and send a password by email
+     * Set knew to true and send a password by email
      *
      * @param User $user
      * @return \Illuminate\Http\Response
      */
     public function sendPassword(User $user)
     {
-        if (!$user->know) {
+        if (!$user->knew) {
             $this->passwordToEmail($user);
-            $user->know = true;
+            $user->knew = true;
             $user->save();
 
             $type = "success";

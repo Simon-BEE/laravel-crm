@@ -39,7 +39,7 @@
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
 
-                                    @if (!$user->know)
+                                    @if (!$user->knew)
                                         <a class="dropdown-item" href="{{ route('admin.customers.send_password', $user) }}">
                                             <i class="fas fa-key"></i> <span class="ml-3">Envoyer son mot de passe</span>
                                         </a>

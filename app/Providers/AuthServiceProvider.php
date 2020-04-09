@@ -30,11 +30,5 @@ class AuthServiceProvider extends ServiceProvider
         Auth::provider('cache-user', function() {
             return resolve(CacheUserProvider::class);
         });
-
-        // Implicitly grant "Super Admin" role all permissions
-        // This works in the app by using gate-related functions like auth()->user->can() and @can()
-        Gate::before(function ($user, $ability) {
-            return $user->hasRole('Super Admin') ? true : null;
-        });
     }
 }

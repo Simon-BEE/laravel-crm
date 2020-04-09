@@ -14,16 +14,21 @@ class CreateInvoicesTable extends Migration
     public function up()
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('project_id');
-            $table->longText('body');
-            $table->integer('amount')->nullable();
+            $table->id();
+            $table->unsignedBigInteger('invoice_id');
+            $table->unsignedBigInteger('admin_id');
+            $table->unsignedBigInteger('customer_id');
+            $table->unsignedBigInteger('status_id')->default(1);
+            $table->longText('items');
+            $table->string('file')->nullable();
+            $table->integer('amount');
+            $table->dateTime('issue_date');
+            $table->dateTime('due_date');
             $table->timestamps();
-            $table->softDeletes();
 
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('project_id')->references('id')->on('projects');
+            $table->foreign('admin_id')->references('id')->on('users');
+            $table->foreign('customer_id')->references('id')->on('users');
+            $table->foreign('status_id')->references('id')->on('invoice_statuses');
         });
     }
 

@@ -33,8 +33,8 @@ class AppServiceProvider extends ServiceProvider
 
         User::observe(UserObserver::class);
 
-        Blade::if('manager', function(){
-            return auth()->check() && auth()->user()->manager;
+        Blade::if('admin', function(){
+            return auth()->check() && auth()->user()->isAdmin;
         });
     }
 }

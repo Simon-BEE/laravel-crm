@@ -11,15 +11,48 @@ class Invoice extends Model
 
     protected $guarded = ['id'];
 
-    // RELATIONS
+    protected $casts = [
+        "items" => "array",
+    ];
 
-    public function project()
+    public function getItsStatusAttribute()
     {
-        return $this->belongsTo(Ticket::class);
+        switch ($this->status->name) {
+            case 'Pending':
+                $statement = "<span class=\"badge badge-warning\"> " . $this->status->name . "</span>";
+                break;
+            case 'Sent':
+                $statement = "<span class=\"badge badge-info\"> " . $this->status->name . "</span>";
+                break;
+            case 'Paid':
+                $statement = "<span class=\"badge badge-success\"> " . $this->status->name . "</span>";
+                break;
+            case 'Cancelled':
+                $statement = "<span class=\"badge badge-danger\"> " . $this->status->name . "</span>";
+                break;
+
+            default:
+                $statement = "<span class=\"badge badge-dark\">Error</span>";
+                break;
+        }
+
+        return $statement;
     }
 
-    public function user()
+    // RELATIONS
+
+    public function admin()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'admin_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'customer_id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(InvoiceStatus::class);
     }
 }

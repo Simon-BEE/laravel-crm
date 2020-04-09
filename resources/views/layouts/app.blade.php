@@ -20,7 +20,7 @@
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark shadow border-bottom border-dark">
-            <a class="navbar-brand" href="/">{{ config('app.name', 'Laravel') }} / Admin</a>
+            <a class="navbar-brand" href="@admin {{ route('admin.home') }} @else {{ route('customer.home') }} @endadmin">SKYMON<span class="font-weight-bold">MANAGER</span> </a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
                 <i class="fas fa-bars"></i>
             </button
@@ -41,7 +41,7 @@
                         <a class="dropdown-item" href="#">Paramètres</a>
                         <a class="dropdown-item" href="#">Journal des logs</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ url('/') }}">Retourner sur le site</a>
+                        <a class="dropdown-item" href="@admin {{ route('admin.home') }} @else {{ route('customer.home') }} @endadmin">Retourner sur le site</a>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Déconnexion') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
@@ -55,15 +55,15 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <div class="sb-sidenav-menu-heading">Core</div>
-                            <a class="nav-link" href="/">
+                            <div class="sb-sidenav-menu-heading">Général</div>
+                            <a class="nav-link" href="@admin {{ route('admin.home') }} @else {{ route('customer.home') }} @endadmin">
                                 <div class="sb-nav-link-icon">
                                     <i class="fas fa-tachometer-alt"></i>
                                 </div>
                                 Dashboard
                             </a>
-                            @manager
-                            <div class="sb-sidenav-menu-heading">Données</div>
+                            @admin
+                                <div class="sb-sidenav-menu-heading">Données</div>
                                 <!-- -->
                                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="false" aria-controls="collapseUsers">
                                     <div class="sb-nav-link-icon">
@@ -76,8 +76,8 @@
                                 </a>
                                 <div class="collapse" id="collapseUsers" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="{{ route('customers.create') }}">Ajouter un client</a>
-                                        <a class="nav-link" href="{{ route('customers.index') }}">Liste de tous les clients</a>
+                                        <a class="nav-link" href="{{ route('admin.customers.create') }}">Ajouter un client</a>
+                                        <a class="nav-link" href="{{ route('admin.customers.index') }}">Liste de tous les clients</a>
                                     </nav>
                                 </div>
                                 <!-- -->
@@ -92,9 +92,9 @@
                                 </a>
                                 <div class="collapse" id="collapseProjects" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="{{ route('projects.create') }}">Créer un projet</a>
-                                        <a class="nav-link" href="{{ route('projects.index') }}">Liste de tous les projets</a>
-                                        <a class="nav-link" href="{{ route('status.projects.index') }}">Gérer les statuts</a>
+                                        <a class="nav-link" href="{{ route('admin.projects.create') }}">Créer un projet</a>
+                                        <a class="nav-link" href="{{ route('admin.projects.index') }}">Liste de tous les projets</a>
+                                        <a class="nav-link" href="{{ route('admin.status.projects.index') }}">Gérer les statuts</a>
                                     </nav>
                                 </div>
                                 <!-- -->
@@ -111,7 +111,7 @@
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="#">Créer un ticket</a>
                                         <a class="nav-link" href="#">Liste de tous les tickets</a>
-                                        <a class="nav-link" href="{{ route('status.tickets.index') }}">Gérer les statuts</a>
+                                        <a class="nav-link" href="{{ route('admin.status.tickets.index') }}">Gérer les statuts</a>
                                     </nav>
                                 </div>
                                 <!-- -->
@@ -142,8 +142,8 @@
                                 </a>
                                 <div class="collapse" id="collapseInvoices" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="#">Créer une facture</a>
-                                        <a class="nav-link" href="#">Liste de toutes les factures</a>
+                                        <a class="nav-link" href="{{ route('admin.invoices.create') }}">Créer une facture</a>
+                                        <a class="nav-link" href="{{ route('admin.invoices.index') }}">Liste de toutes les factures</a>
                                     </nav>
                                 </div>
                                 <!-- -->
@@ -158,17 +158,32 @@
                                 </a>
                                 <div class="collapse" id="collapseArchive" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="{{ route('archives.customers.index') }}">Clients</a>
+                                        <a class="nav-link" href="{{ route('admin.archives.customers.index') }}">Clients</a>
                                         <a class="nav-link" href="#">Tickets</a>
-                                        <a class="nav-link" href="{{ route('archives.projects.index') }}">Projets</a>
+                                        <a class="nav-link" href="{{ route('admin.archives.projects.index') }}">Projets</a>
                                         <a class="nav-link" href="#">Devis</a>
                                         <a class="nav-link" href="#">Facture</a>
                                     </nav>
                                 </div>
                                 <!-- -->
-                                @endmanager
-                            </div>
+                            @endadmin
+                            <div class="sb-sidenav-menu-heading">Compte</div>
+                            <!-- -->
+                            <a class="nav-link" href="@admin {{ route('admin.account.index') }} @else {{ route('customer.account.index') }} @endadmin">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-user-cog"></i>
+                                </div>
+                                Modifier
+                            </a>
+                            <a class="nav-link" href="@admin {{ route('admin.home') }} @else {{ route('customer.home') }} @endadmin">
+                                <div class="sb-nav-link-icon">
+                                    <i class="fas fa-sliders-h"></i>
+                                </div>
+                                Paramètres
+                            </a>
+                            <!-- -->
                         </div>
+                    </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Connecté en tant que :</div>
                         {{ auth()->user()->name }}
@@ -211,8 +226,9 @@
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/scripts.js') }}"></script>
         @yield('modal')
         @yield('javascript')
     </body>

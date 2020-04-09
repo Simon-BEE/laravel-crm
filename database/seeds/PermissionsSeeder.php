@@ -15,14 +15,15 @@ class PermissionsSeeder extends Seeder
     public function run()
     {
         $customerRole = Role::create(['name' => 'customer']);
-        $managerRole = Role::create(['name' => 'manager']);
+        $adminRole = Role::create(['name' => 'admin']);
 
         User::create([
             'firstname' => 'Simon',
             'lastname' => 'Bée',
             'email' => 'simonbee1303@gmail.com',
             'password' => Hash::make('123123'),
-            'role_id' => $managerRole->id,
+            'role_id' => $adminRole->id,
+            'know' => true,
         ]);
 
         User::create([

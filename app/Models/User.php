@@ -46,11 +46,24 @@ class User extends Authenticatable
      */
     protected $softCascade = ['projects', 'tickets', 'replies'];
 
+    protected $with = ['address'];
+
+    protected static function boot(){
+        parent::boot();
+
+        static::created(function($user){
+            $user->address()->create([
+                'user_id' => $user->id
+            ]);
+        });
+    }
+
     // SCOPES
 
     public function scopeCustomers($query)
     {
-        return $query->where('id', '!=', auth()->id());
+        $roleId = Role::where('name', 'customer')->first()->id;
+        return $query->where('role_id', $roleId);
     }
 
     public function scopeCustomersWithProjects($query)
@@ -65,12 +78,22 @@ class User extends Authenticatable
         return $this->firstname . ' ' . $this->lastname;
     }
 
-    public function getManagerAttribute()
+    public function getCompleteAddressAttribute()
     {
-        return $this->role->name === 'manager';
+        return $this->address->getCompleteAddress();
     }
 
-    public function getCustomerAttribute()
+    public function getPartialAddressAttribute()
+    {
+        return $this->address->getPartialAddress();
+    }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->role->name === 'admin';
+    }
+
+    public function getIsCustomerAttribute()
     {
         return $this->role->name === 'customer';
     }
@@ -85,6 +108,11 @@ class User extends Authenticatable
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function address()
+    {
+        return $this->hasOne(Address::class);
     }
 
     public function projects()
@@ -107,8 +135,13 @@ class User extends Authenticatable
         return $this->hasMany(Estimate::class);
     }
 
-    public function invoices()
+    public function customerInvoices()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->hasMany(Invoice::class, 'customer_id');
+    }
+
+    public function adminInvoices()
+    {
+        return $this->hasMany(Invoice::class, 'admin_id');
     }
 }

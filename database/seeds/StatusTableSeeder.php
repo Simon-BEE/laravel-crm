@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\StatusTicket;
+use App\Models\InvoiceStatus;
 use App\Models\StatusProject;
 use Illuminate\Database\Seeder;
 
@@ -26,5 +27,11 @@ class StatusTableSeeder extends Seeder
         StatusTicket::create(['name' => 'En attente']);
         StatusTicket::create(['name' => 'Résolu']);
         StatusTicket::create(['name' => 'Ré-ouvert']);
+
+        //Status for invoices
+        InvoiceStatus::create(['name' => 'Pending']);
+        InvoiceStatus::create(['name' => 'Sent']);
+        InvoiceStatus::create(['name' => 'Paid']);
+        InvoiceStatus::create(['name' => 'Cancelled']);
     }
 }

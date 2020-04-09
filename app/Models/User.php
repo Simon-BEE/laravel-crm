@@ -20,7 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'firstname', 'lastname', 'email',
         'password', 'role_id', 'address',
-        'knew', 'changed',
+        'knew', 'changed', 'settings',
     ];
 
     /**
@@ -103,6 +103,16 @@ class User extends Authenticatable
     public function getIsDeleteAttribute()
     {
         return $this->deleted_at ?? false;
+    }
+
+    public function getSettingsAttribute($value)
+    {
+        return json_decode($value);
+    }
+
+    public function getPaginationAttribute()
+    {
+        return $this->settings ? $this->settings->pagination : null;
     }
 
     // RELATIONS

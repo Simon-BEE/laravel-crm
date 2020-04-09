@@ -19,7 +19,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $users = User::customers()->paginate(20);
+        $users = User::customers()->paginate(config('app.pagination'));
 
         return view('admin.customers.index', compact('users'));
     }

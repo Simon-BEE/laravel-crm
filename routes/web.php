@@ -83,6 +83,12 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function(){
         Route::get('/password', 'AccountController@password')->name('account.password');
         Route::patch('/password', 'AccountController@passwordUpdate')->name('account.passwordUpdate');
     });
+
+    // Settings
+    Route::group(['namespace' => 'Settings', 'prefix' => 'settings'], function () {
+        Route::get('/', 'SettingsController@index')->name('settings.index');
+        Route::patch('/', 'SettingsController@update')->name('settings.update');
+    });
 });
 
 // CUSTOMER ROUTES
@@ -97,5 +103,11 @@ Route::middleware(['customer'])->prefix('customer')->name('customer.')->group(fu
         Route::patch('/', 'AccountController@update')->name('account.update');
         Route::get('/password', 'AccountController@password')->name('account.password');
         Route::patch('/password', 'AccountController@passwordUpdate')->name('account.passwordUpdate');
+    });
+
+    // Settings
+    Route::group(['namespace' => 'Settings', 'prefix' => 'settings'], function () {
+        Route::get('/', 'SettingsController@index')->name('settings.index');
+        Route::patch('/', 'SettingsController@update')->name('settings.update');
     });
 });

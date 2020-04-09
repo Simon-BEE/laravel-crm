@@ -15,7 +15,7 @@ class InvoiceController extends Controller
 {
     public function index()
     {
-        $invoices = Invoice::where('admin_id', auth()->id())->latest()->paginate(20);
+        $invoices = Invoice::where('admin_id', auth()->id())->latest()->paginate(config('app.pagination'));
         $status = InvoiceStatus::all();
         return view('admin.invoices.index', compact('invoices', 'status'));
     }

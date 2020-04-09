@@ -15,7 +15,7 @@ class ProjectTrashController extends Controller
      */
     public function index()
     {
-        $projects = Project::onlyTrashed()->paginate(20);
+        $projects = Project::onlyTrashed()->paginate(config('app.pagination'));
         // dd($projects->first()->user->delete);
 
         return view('admin.archives.projects.index', compact('projects'));

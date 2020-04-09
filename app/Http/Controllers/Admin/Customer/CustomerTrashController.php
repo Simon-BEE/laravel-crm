@@ -16,7 +16,7 @@ class CustomerTrashController extends Controller
      */
     public function index()
     {
-        $users = User::onlyTrashed()->paginate(20);
+        $users = User::onlyTrashed()->paginate(config('app.pagination'));
 
         return view('admin.archives.customers.index', compact('users'));
     }

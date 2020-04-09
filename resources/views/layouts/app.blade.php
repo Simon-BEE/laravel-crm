@@ -185,7 +185,7 @@
                                 </nav>
                             </div>
                             <!-- -->
-                            <a class="nav-link" href="@admin {{ route('admin.home') }} @else {{ route('customer.home') }} @endadmin">
+                            <a class="nav-link" href="@admin {{ route('admin.settings.index') }} @else {{ route('customer.settings.index') }} @endadmin">
                                 <div class="sb-nav-link-icon">
                                     <i class="fas fa-sliders-h"></i>
                                 </div>

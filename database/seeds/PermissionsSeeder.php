@@ -24,6 +24,7 @@ class PermissionsSeeder extends Seeder
             'password' => Hash::make('123123'),
             'role_id' => $adminRole->id,
             'knew' => true,
+            'changed' => true,
         ]);
 
         User::create([

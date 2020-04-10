@@ -8,10 +8,16 @@
 <body>
 
     <style>
+        :root{
+            --main: #26A69A;
+            --text: #263238;
+            --light: #78909C;
+        }
+
         *{
             margin: 0;padding: 0;
             box-sizing: border-box;
-            color: #263238;
+            color: var(--text);
         }
 
         html, body{
@@ -27,7 +33,7 @@
         }
 
         *.text-light{
-            color: #78909C;
+            color: var(--light);
         }
 
         /* Header */
@@ -86,7 +92,7 @@
         }
 
         .address_from p{
-            color: #78909C;
+            color: var(--light);
         }
 
         .address_from div{
@@ -95,7 +101,7 @@
 
         .address_to{
             width: 60%;
-            background-color: #26A69A;
+            background-color: var(--main);
         }
 
         .address_to p, .address_to h3{
@@ -168,7 +174,7 @@
         }
 
         tfoot tr.total_price td:last-child{
-            background-color: #26A69A;
+            background-color: var(--main);
             padding-right: 3px;
             color: #fff;
         }
@@ -266,6 +272,13 @@
                     </tr>
                 </thead>
                 <tbody>
+                    {{-- <tr>
+                        <td class="text-left">Adipisicing elit. Corrupti, voluptates.</td>
+                        <td>2</td>
+                        <td>heure</td>
+                        <td class="text-light">45,00 €</td>
+                        <td class="text-right">90,00 €</td>
+                    </tr> --}}
                     {{-- Items --}}
                     @foreach($invoice->items as $item)
                         <tr>
@@ -294,6 +307,29 @@
                     @endforeach
                 </tbody>
                 <tfoot>
+                    {{-- <tr class="empty">
+                        <td colspan="5"></td>
+                    </tr>
+                    <tr class="taxable_amount">
+                        <td class="no-border" colspan="3"></td>
+                        <td class="name text-right">Montant taxable</td>
+                        <td class="text-right">120,00 €</td>
+                    </tr>
+                    <tr class="tax_rates">
+                        <td class="no-border" colspan="3"></td>
+                        <td class="name text-right">Taux de taxe</td>
+                        <td class="text-right">20%</td>
+                    </tr>
+                    <tr class="total_tax">
+                        <td class="no-border" colspan="3"></td>
+                        <td class="name text-right">Montant des taxes</td>
+                        <td class="text-right">20,00 €</td>
+                    </tr>
+                    <tr class="total_price">
+                        <td class="no-border" colspan="3"></td>
+                        <td class="name text-right">Montant total à payer</td>
+                        <td class="text-right">650,25 €</td>
+                    </tr> --}}
                     {{-- Summary --}}
                     <tr class="empty">
                         <td colspan="{{ $invoice->table_columns }}"></td>
@@ -371,7 +407,7 @@
         </section>
         <section class="main_footer">
             <p>
-                <span><strong>{{ $invoice->name() }}</strong> n°{{ $invoice->getSerialNumber() }}</span>
+                <span><strong>{{ $invoice->name }}</strong> n°{{ $invoice->getSerialNumber() }}</span>
                 <span><strong>Email</strong> contact@skymon.fr</span>
                 <span><strong>Téléphone</strong> 0617841434</span>
             </p>

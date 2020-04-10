@@ -17,7 +17,7 @@
         @method('PATCH')
 
         @if (auth()->user()->changed)
-            @include('includes.input', [
+            @include('includes.form.input', [
                 'name' => 'password',
                 'type' => 'password',
                 'label' => 'Ancien mot de passe',
@@ -28,7 +28,7 @@
             ])
         @endif
 
-        @include('includes.input', [
+        @include('includes.form.input', [
             'name' => 'new_password',
             'type' => 'password',
             'label' => 'Nouveau mot de passe',
@@ -38,7 +38,7 @@
             'required' => true
         ])
 
-        @include('includes.input', [
+        @include('includes.form.input', [
             'name' => 'new_password_confirmation',
             'type' => 'password',
             'label' => 'Confirmer le nouveau mot de passe',

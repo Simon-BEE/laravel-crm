@@ -26,8 +26,8 @@ class CreateInvoiceRequest extends FormRequest
         return [
             "issue_date" => "required|date|after_or_equal:now",
             "due_date" => "required|date|after:issue_date",
-            "subject" => "required|string|max:255",
             "customer_id" => "required|exists:users,id",
+            "project_id" => "required|exists:projects,id",
             "items" => "required|array",
             "price_items" => "required|array",
             "qty_items" => "required|array",

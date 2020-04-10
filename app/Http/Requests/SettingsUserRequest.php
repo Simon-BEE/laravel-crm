@@ -24,7 +24,7 @@ class SettingsUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'pagination' => 'nullable|integer|between:5,50',
+            'pagination' => 'required|integer|between:5,50',
         ];
     }
 }

@@ -37,6 +37,7 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function(){
         Route::group(['namespace' => 'Invoice'], function () {
             Route::resource('invoices', 'InvoiceController')->only('index', 'create','store');
             Route::patch('invoices', 'InvoiceController@updateStatus')->name('invoices.status.update');
+            Route::post('invoices/projects', 'InvoiceController@getProjectsByCustomer')->name('invoices.customer.projects');
         });
 
         // Status

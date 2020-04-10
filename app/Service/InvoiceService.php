@@ -2,9 +2,10 @@
 
 namespace App\Service;
 
+use Carbon\Carbon;
+use App\Models\User;
 use LaravelDaily\Invoices\Invoice;
 use App\Models\Invoice as InvoiceModel;
-use Carbon\Carbon;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
@@ -23,7 +24,6 @@ class InvoiceService
     public static function generateInvoice(array $dataForm, bool $saving = true)
     {
         $invoice = self::makeInvoice($dataForm, $saving);
-
         return $invoice;
     }
 
@@ -59,7 +59,7 @@ class InvoiceService
      */
     private static function makeInvoice(array $dataForm, bool $saving)
     {
-        $seller = self::addSellerPart($dataForm['user_id']);
+        $seller = self::addSellerPart($dataForm['admin_id']);
         $customer = self::addCustomerPart($dataForm['customer_id']);
         $items = self::createInvoiceItems($dataForm);
         $sequence = self::uniqueInvoiceId();
@@ -75,7 +75,7 @@ class InvoiceService
             ->date($issueDate)
             ->payUntilDays($issueDate->diffInDays($dueDate))
             ->currencyFormat('{SYMBOL}{VALUE}')
-            ->filename($dataForm['user_id'] . '_' . $dataForm['customer_id'] . '_' . $sequence)
+            ->filename($dataForm['admin_id'] . '_' . $dataForm['customer_id'] . '_' . $sequence)
             ->addItems($items)
             ->taxRate(20)
         ;
@@ -145,12 +145,11 @@ class InvoiceService
      */
     private static function addSellerPart(int $id)
     {
-        $seller = \App\User::find($id)->first();
-
+        $seller = User::find($id);
         return new Party([
             'name' => $seller->name,
-            'address' => "$seller->company_address, - <br> $seller->company_city, $seller->company_zipcode - $seller->company_country",
-            'phone' => $seller->company_phone,
+            'address' => $seller->address->address_1 . ' ' . $seller->address->address_2 . '- <br>' . $seller->address->city . ', ' . $seller->address->zipcode . '<br>'. $seller->address->country,
+            'phone' => $seller->address->phone_1 . ' ' . $seller->address->phone_2,
             'custom_fields' => [
                 'email' => $seller->email,
             ],
@@ -165,13 +164,13 @@ class InvoiceService
      */
     private static function addCustomerPart(int $id)
     {
-        $customer = \App\Models\Customer::find($id)->first();
+        $customer = User::find($id);
 
         return new Party([
             'name' => $customer->name,
-            'phone' => $customer->phone_1 . ' ' . $customer->phone_2,
+            'phone' => $customer->address->phone_1 . ' ' . $customer->address->phone_2,
             'email' => $customer->email,
-            'address' => "$customer->address_1 $customer->address_2 - <br> $customer->city, $customer->zipcode <br> $customer->country",
+            'address' => $customer->address->address_1 . ' ' . $customer->address->address_2 . '- <br>' . $customer->address->city, $customer->address->zipcode . '<br>'. $customer->address->country,
         ]);
     }
 }

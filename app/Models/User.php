@@ -68,48 +68,119 @@ class User extends Authenticatable
         return $query->where('role_id', $roleId);
     }
 
+    public function scopeCustomersWithAddress($query)
+    {
+        $customers = $this->scopeCustomersWithProjects($query)->get();
+        return $customers->filter(function($customer, $key){
+            if ($customer->hasAddress && $customer->hasProjects) {
+                return $customer;
+            }
+        });
+    }
+
     public function scopeCustomersWithProjects($query)
     {
-        return $query->where('id', '!=', auth()->id())->with('projects');
+        return  $this->scopeCustomers($query)->with('projects');
     }
 
     // ATTRIBUTES
 
+    /**
+     * Concat firstname and lastname
+     *
+     * @return string
+     */
     public function getNameAttribute()
     {
         return $this->firstname . ' ' . $this->lastname;
     }
 
+    /**
+     * Get a string with all address attributes
+     *
+     * @return string
+     */
     public function getCompleteAddressAttribute()
     {
         return $this->address->getCompleteAddress();
     }
 
+    /**
+     * Get a string with only city and country attributes
+     *
+     * @return string
+     */
     public function getPartialAddressAttribute()
     {
         return $this->address->getPartialAddress();
     }
 
+    /**
+     * Check if user's address has been filled
+     *
+     * @return bool
+     */
+    public function getHasAddressAttribute()
+    {
+        return $this->address->address_1 ? true : false;
+    }
+
+    /**
+     * Check if user has project
+     *
+     * @return bool
+     */
+    public function getHasProjectsAttribute()
+    {
+        return $this->projects->isNotEmpty();
+    }
+
+    /**
+     * Check if user is an admin
+     *
+     * @return bool
+     */
     public function getIsAdminAttribute()
     {
         return $this->role->name === 'admin';
     }
 
+    /**
+     * Check if user is a customer
+     *
+     * @return bool
+     */
     public function getIsCustomerAttribute()
     {
         return $this->role->name === 'customer';
     }
 
+    /**
+     * Check if user is deleted
+     *
+     * @return string|bool
+     */
     public function getIsDeleteAttribute()
     {
         return $this->deleted_at ?? false;
     }
 
+    /**
+     * Decode json of settings user's attribute
+     *
+     * @param JSON $value
+     * @return object
+     */
     public function getSettingsAttribute($value)
     {
         return json_decode($value);
     }
 
+    /**
+     * Return pagination settings of user
+     *
+     * @return ?integer
+     */
     public function getPaginationAttribute()
     {
         return $this->settings ? $this->settings->pagination : null;

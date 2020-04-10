@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Facture n°{{ $invoice['id'] ?? '' }} </title>
+    <title>{{ $invoice->name }} {{ $invoice->getSerialNumber() }}</title>
 
     <style>
         .invoice-box {
@@ -113,8 +113,8 @@
                             </td>
 
                             <td>
-                                Facture #: {{ $invoice['id'] ?? '' }}<br>
-                                Créée le 01/02/2020
+                                <p>{{ $invoice->name }} #: {{ $invoice->getSerialNumber() }}</p>
+                                <p>{{ __('invoices::invoice.date') }}: <strong>{{ $invoice->getDate() }}</strong></p>
                             </td>
                         </tr>
                     </table>
@@ -126,15 +126,25 @@
                     <table>
                         <tr>
                             <td>
-                                SKYMON.fr | développement WEB<br>
-                                3 route de la bergerette<br>
-                                Terjat, 03420
+                                <p>{{ $invoice->seller->name }}</p>
+                                <p>{!! $invoice->seller->address !!}</p>
+                                <p>{{ __('invoices::invoice.phone') }}: {{ $invoice->seller->phone }}</p>
+                                @foreach($invoice->seller->custom_fields as $key => $value)
+                                    <p class="seller-custom-field">
+                                        {{ ucfirst($key) }}: {{ $value }}
+                                    </p>
+                                @endforeach
                             </td>
 
                             <td>
-                                Acme Corp.<br>
-                                John Doe<br>
-                                john@example.com
+                                <p>{{ $invoice->buyer->name }}</p>
+                                <p>{!! $invoice->buyer->address !!}</p>
+                                <p>{{ __('invoices::invoice.phone') }}: {{ $invoice->buyer->phone }}</p>
+                                @foreach($invoice->buyer->custom_fields as $key => $value)
+                                    <p class="buyer-custom-field">
+                                        {{ ucfirst($key) }}: {{ $value }}
+                                    </p>
+                                @endforeach
                             </td>
                         </tr>
                     </table>
@@ -161,7 +171,7 @@
                 </td>
             </tr>
 
-            <tr class="heading">
+            {{-- <tr class="heading">
                 <td>
                     Désignation
                 </td>
@@ -205,8 +215,133 @@
                 <td>
                     Total TTC: $385.00
                 </td>
-            </tr>
+            </tr> --}}
+
+        <table class="table">
+            <thead>
+                <tr class="heading">
+                    <th scope="col" class="border-0 pl-0">{{ __('invoices::invoice.description') }}</th>
+                    @if($invoice->hasItemUnits)
+                        <th scope="col" class="text-center border-0">{{ __('invoices::invoice.units') }}</th>
+                    @endif
+                    <th scope="col" class="text-center border-0">{{ __('invoices::invoice.quantity') }}</th>
+                    <th scope="col" class="text-right border-0">{{ __('invoices::invoice.price') }}</th>
+                    @if($invoice->hasItemDiscount)
+                        <th scope="col" class="text-right border-0">{{ __('invoices::invoice.discount') }}</th>
+                    @endif
+                    @if($invoice->hasItemTax)
+                        <th scope="col" class="text-right border-0">{{ __('invoices::invoice.tax') }}</th>
+                    @endif
+                    <th scope="col" class="text-right border-0 pr-0">{{ __('invoices::invoice.sub_total') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{-- Items --}}
+                @foreach($invoice->items as $item)
+                <tr>
+                    <td class="pl-0">{{ $item->title }}</td>
+                    @if($invoice->hasItemUnits)
+                        <td class="text-center">{{ $item->units }}</td>
+                    @endif
+                    <td class="text-center">{{ $item->quantity }}</td>
+                    <td class="text-right">
+                        {{ $invoice->formatCurrency($item->price_per_unit) }}
+                    </td>
+                    @if($invoice->hasItemDiscount)
+                        <td class="text-right">
+                            {{ $invoice->formatCurrency($item->discount) }}
+                        </td>
+                    @endif
+                    @if($invoice->hasItemTax)
+                        <td class="text-right">
+                            {{ $invoice->formatCurrency($item->tax) }}
+                        </td>
+                    @endif
+                    <td class="text-right pr-0">
+                        {{ $invoice->formatCurrency($item->sub_total_price) }}
+                    </td>
+                </tr>
+                @endforeach
+                {{-- Summary --}}
+                @if($invoice->hasItemOrInvoiceDiscount())
+                    <tr>
+                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
+                        <td class="text-right pl-0">{{ __('invoices::invoice.total_discount') }}</td>
+                        <td class="text-right pr-0">
+                            {{ $invoice->formatCurrency($invoice->total_discount) }}
+                        </td>
+                    </tr>
+                @endif
+                @if($invoice->taxable_amount)
+                    <tr>
+                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
+                        <td class="text-right pl-0">{{ __('invoices::invoice.taxable_amount') }}</td>
+                        <td class="text-right pr-0">
+                            {{ $invoice->formatCurrency($invoice->taxable_amount) }}
+                        </td>
+                    </tr>
+                @endif
+                @if($invoice->tax_rate)
+                    <tr>
+                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
+                        <td class="text-right pl-0">{{ __('invoices::invoice.tax_rate') }}</td>
+                        <td class="text-right pr-0">
+                            {{ $invoice->tax_rate }}%
+                        </td>
+                    </tr>
+                @endif
+                @if($invoice->hasItemOrInvoiceTax())
+                    <tr>
+                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
+                        <td class="text-right pl-0">{{ __('invoices::invoice.total_taxes') }}</td>
+                        <td class="text-right pr-0">
+                            {{ $invoice->formatCurrency($invoice->total_taxes) }}
+                        </td>
+                    </tr>
+                @endif
+                @if($invoice->shipping_amount)
+                    <tr>
+                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
+                        <td class="text-right pl-0">{{ __('invoices::invoice.shipping') }}</td>
+                        <td class="text-right pr-0">
+                            {{ $invoice->formatCurrency($invoice->shipping_amount) }}
+                        </td>
+                    </tr>
+                @endif
+                    <tr>
+                        <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
+                        <td class="text-right pl-0">{{ __('invoices::invoice.total_amount') }}</td>
+                        <td class="text-right pr-0 total-amount">
+                            {{ $invoice->formatCurrency($invoice->total_amount) }}
+                        </td>
+                    </tr>
+            </tbody>
         </table>
+        </table>
+    @if($invoice->notes)
+        <p>
+            {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
+        </p>
+    @endif
+
+    <p>
+        {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
+    </p>
+    <p>
+        {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
+    </p>
+
+    <script type="text/php">
+        if (isset($pdf) && $PAGE_COUNT > 1) {
+            $text = "Page {PAGE_NUM} / {PAGE_COUNT}";
+            $size = 10;
+            $font = $fontMetrics->getFont("Verdana");
+            $width = $fontMetrics->get_text_width($text, $font, $size) / 2;
+            $x = ($pdf->get_width() - $width);
+            $y = $pdf->get_height() - 35;
+            $pdf->page_text($x, $y, $text, $font, $size);
+        }
+    </script>
     </div>
 </body>
 </html>

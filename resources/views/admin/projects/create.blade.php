@@ -16,7 +16,7 @@
     <form action="{{ route('admin.projects.store') }}" method="post" class="mb-3">
         @csrf
 
-        @include('includes.input', [
+        @include('includes.form.input', [
             'name' => 'name',
             'type' => 'text',
             'label' => 'Nom',
@@ -26,7 +26,7 @@
             'required' => true
         ])
 
-        @include('includes.select', [
+        @include('includes.form.select', [
             'name' => 'user_id',
             'label' => 'Définir le client associé',
             'collection' => $customers,
@@ -34,7 +34,7 @@
             'required' => true
         ])
 
-        @include('includes.input', [
+        @include('includes.form.input', [
             'name' => 'news',
             'type' => 'text',
             'label' => 'Point important',
@@ -44,7 +44,7 @@
             'required' => false
         ])
 
-        @include('includes.select', [
+        @include('includes.form.select', [
             'name' => 'status_id',
             'label' => 'Choisir un statut',
             'collection' => $status,
@@ -52,7 +52,7 @@
             'required' => false
         ])
 
-        @include('includes.textarea', [
+        @include('includes.form.textarea', [
             'name' => 'body',
             'label' => 'Informations sur le projet',
             'placeholder' => 'Les informations sur le projet',

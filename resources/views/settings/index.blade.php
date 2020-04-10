@@ -16,7 +16,7 @@
         @csrf
         @method('PATCH')
 
-        @include('includes.input', [
+        @include('includes.form.input', [
             'name' => 'pagination',
             'type' => 'text',
             'label' => 'Nombre de résultats par page',

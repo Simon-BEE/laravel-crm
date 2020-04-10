@@ -13,6 +13,21 @@ class Project extends Model
 
     protected $with = ['user', 'status'];
 
+    // SCOPES
+
+    public function scopeEssentialDataByCustomer($query, int $customerId)
+    {
+        return $query
+            ->select('id', 'name')
+            ->where('user_id', $customerId)
+            ->where('status_id', '!=', 3)
+            ->where('status_id', '!=', 4)
+            ->get()
+        ;
+    }
+
+    // ATTRIBUTES
+
     public function getActualStatusAttribute()
     {
         $status = $this->status->name;

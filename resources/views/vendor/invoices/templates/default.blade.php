@@ -1,151 +1,225 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>{{ $invoice->name }}</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ $invoice->name }} {{ $invoice->getSerialNumber() }}</title>
 
-        <link rel="stylesheet" href="{{ asset('/vendor/invoices/bootstrap.min.css') }}">
+    <style>
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .15);
+            font-size: 16px;
+            line-height: 24px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            color: #555;
+        }
 
-        <style type="text/css" media="screen">
-            * {
-                font-family: "DejaVu Sans";
-            }
-            html {
-                margin: 0;
-            }
-            body {
-                font-size: 10px;
-                margin: 36pt;
-            }
-            body, h1, h2, h3, h4, h5, h6, table, th, tr, td, p, div {
-                line-height: 1.1;
-            }
-            .total-amount {
-                font-size: 12px;
-                font-weight: 700;
-            }
-        </style>
-    </head>
+        .invoice-box table {
+            width: 100%;
+            line-height: inherit;
+            text-align: left;
+        }
 
-    <body>
-        {{-- Header --}}
-        @if($invoice->logo)
-            <img src="{{ $invoice->getLogo() }}" alt="logo" height="100">
-        @endif
-        <table class="table mt-5">
-            <tbody>
-                <tr>
-                    <td class="border-0 pl-0" width="70%">
-                        <h4 class="text-uppercase">
-                            <strong>{{ $invoice->name }}</strong>
-                        </h4>
-                    </td>
-                    <td class="border-0 pl-0">
-                        <p>{{ __('invoices::invoice.serial') }} <strong>{{ $invoice->getSerialNumber() }}</strong></p>
-                        <p>{{ __('invoices::invoice.date') }}: <strong>{{ $invoice->getDate() }}</strong></p>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        .invoice-box table td {
+            padding: 5px;
+            vertical-align: top;
+        }
 
-        {{-- Seller - Buyer --}}
+        .invoice-box table tr td:nth-child(2) {
+            text-align: right;
+        }
+
+        .invoice-box table tr.top table td {
+            padding-bottom: 20px;
+        }
+
+        .invoice-box table tr.top table td.title {
+            font-size: 45px;
+            line-height: 45px;
+            color: #333;
+        }
+
+        .invoice-box table tr.information table td {
+            padding-bottom: 40px;
+        }
+
+        .invoice-box table tr.heading td {
+            background: #eee;
+            border-bottom: 1px solid #ddd;
+            font-weight: bold;
+        }
+
+        .invoice-box table tr.details td {
+            padding-bottom: 20px;
+        }
+
+        .invoice-box table tr.item td{
+            border-bottom: 1px solid #eee;
+        }
+
+        .invoice-box table tr.item.last td {
+            border-bottom: none;
+        }
+
+        .invoice-box table tr.total td:nth-child(2) {
+            border-top: 2px solid #eee;
+            font-weight: bold;
+        }
+
+        .heading td{width:33%;}
+
+        @media only screen and (max-width: 600px) {
+            .invoice-box table tr.top table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        /** RTL **/
+        .rtl {
+            direction: rtl;
+            font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+        }
+
+        .rtl table {
+            text-align: right;
+        }
+
+        .rtl table tr td:nth-child(2) {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="invoice-box">
+        <table cellpadding="0" cellspacing="0">
+            <tr class="top">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td class="title">
+                                <h3 style="font-family:Quicksand, sans-serif;letter-spacing:2px;">SKYMON.fr</h1>
+                            </td>
+
+                            <td>
+                                <p>{{ $invoice->name }} #: {{ $invoice->getSerialNumber() }}</p>
+                                <p>{{ __('invoices::invoice.date') }}: <strong>{{ $invoice->getDate() }}</strong></p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="information">
+                <td colspan="2">
+                    <table>
+                        <tr>
+                            <td>
+                                <p>{{ $invoice->seller->name }}</p>
+                                <p>{!! $invoice->seller->address !!}</p>
+                                <p>{{ __('invoices::invoice.phone') }}: {{ $invoice->seller->phone }}</p>
+                                @foreach($invoice->seller->custom_fields as $key => $value)
+                                    <p class="seller-custom-field">
+                                        {{ ucfirst($key) }}: {{ $value }}
+                                    </p>
+                                @endforeach
+                            </td>
+
+                            <td>
+                                <p>{{ $invoice->buyer->name }}</p>
+                                <p>{!! $invoice->buyer->address !!}</p>
+                                <p>{{ __('invoices::invoice.phone') }}: {{ $invoice->buyer->phone }}</p>
+                                @foreach($invoice->buyer->custom_fields as $key => $value)
+                                    <p class="buyer-custom-field">
+                                        {{ ucfirst($key) }}: {{ $value }}
+                                    </p>
+                                @endforeach
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="heading">
+                <td>
+                    Méthode de paiement
+                </td>
+
+                <td>
+                    Montant
+                </td>
+            </tr>
+
+            <tr class="details">
+                <td>
+                    Virement Bancaire
+                </td>
+
+                <td>
+                    1000
+                </td>
+            </tr>
+
+            {{-- <tr class="heading">
+                <td>
+                    Désignation
+                </td>
+
+                <td>
+                    Quantité
+                </td>
+
+                <td>
+                    Prix Unitaire
+                </td>
+            </tr>
+
+            <tr class="item">
+                <td>
+                    Website design
+                </td>
+
+                <td>5</td>
+
+                <td>
+                    $300.00
+                </td>
+            </tr>
+
+            <tr class="total">
+                <td></td>
+
+                <td>
+                    Total HT: $385.00
+                </td>
+            </tr>
+            <tr class="total">
+                <td></td>
+                <td>
+                    TVA: $385.00
+                </td>
+            </tr>
+            <tr class="total">
+                <td></td>
+                <td>
+                    Total TTC: $385.00
+                </td>
+            </tr> --}}
+
         <table class="table">
             <thead>
-                <tr>
-                    <th class="border-0 pl-0" width="48.5%">
-                        <h2>{{ __('invoices::invoice.seller') }}</h2>
-                    </th>
-                    <th class="border-0" width="3%"></th>
-                    <th class="border-0 pl-0">
-                        <h2>{{ __('invoices::invoice.buyer') }}</h2>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="px-0">
-                        @if($invoice->seller->name)
-                            <p class="seller-name">
-                                <strong>{{ $invoice->seller->name }}</strong>
-                            </p>
-                        @endif
-
-                        @if($invoice->seller->address)
-                            <p class="seller-address">
-                                {{ __('invoices::invoice.address') }}: {{ $invoice->seller->address }}
-                            </p>
-                        @endif
-
-                        @if($invoice->seller->code)
-                            <p class="seller-code">
-                                {{ __('invoices::invoice.code') }}: {{ $invoice->seller->code }}
-                            </p>
-                        @endif
-
-                        @if($invoice->seller->vat)
-                            <p class="seller-vat">
-                                {{ __('invoices::invoice.vat') }}: {{ $invoice->seller->vat }}
-                            </p>
-                        @endif
-
-                        @if($invoice->seller->phone)
-                            <p class="seller-phone">
-                                {{ __('invoices::invoice.phone') }}: {{ $invoice->seller->phone }}
-                            </p>
-                        @endif
-
-                        @foreach($invoice->seller->custom_fields as $key => $value)
-                            <p class="seller-custom-field">
-                                {{ ucfirst($key) }}: {{ $value }}
-                            </p>
-                        @endforeach
-                    </td>
-                    <td class="border-0"></td>
-                    <td class="px-0">
-                        @if($invoice->buyer->name)
-                            <p class="buyer-name">
-                                <strong>{{ $invoice->buyer->name }}</strong>
-                            </p>
-                        @endif
-
-                        @if($invoice->buyer->address)
-                            <p class="buyer-address">
-                                {{ __('invoices::invoice.address') }}: {{ $invoice->buyer->address }}
-                            </p>
-                        @endif
-
-                        @if($invoice->buyer->code)
-                            <p class="buyer-code">
-                                {{ __('invoices::invoice.code') }}: {{ $invoice->buyer->code }}
-                            </p>
-                        @endif
-
-                        @if($invoice->buyer->vat)
-                            <p class="buyer-vat">
-                                {{ __('invoices::invoice.vat') }}: {{ $invoice->buyer->vat }}
-                            </p>
-                        @endif
-
-                        @if($invoice->buyer->phone)
-                            <p class="buyer-phone">
-                                {{ __('invoices::invoice.phone') }}: {{ $invoice->buyer->phone }}
-                            </p>
-                        @endif
-
-                        @foreach($invoice->buyer->custom_fields as $key => $value)
-                            <p class="buyer-custom-field">
-                                {{ ucfirst($key) }}: {{ $value }}
-                            </p>
-                        @endforeach
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-        {{-- Table --}}
-        <table class="table">
-            <thead>
-                <tr>
+                <tr class="heading">
                     <th scope="col" class="border-0 pl-0">{{ __('invoices::invoice.description') }}</th>
                     @if($invoice->hasItemUnits)
                         <th scope="col" class="text-center border-0">{{ __('invoices::invoice.units') }}</th>
@@ -243,30 +317,31 @@
                     </tr>
             </tbody>
         </table>
-
-        @if($invoice->notes)
-            <p>
-                {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
-            </p>
-        @endif
-
+        </table>
+    @if($invoice->notes)
         <p>
-            {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
+            {{ trans('invoices::invoice.notes') }}: {!! $invoice->notes !!}
         </p>
-        <p>
-            {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
-        </p>
+    @endif
 
-        <script type="text/php">
-            if (isset($pdf) && $PAGE_COUNT > 1) {
-                $text = "Page {PAGE_NUM} / {PAGE_COUNT}";
-                $size = 10;
-                $font = $fontMetrics->getFont("Verdana");
-                $width = $fontMetrics->get_text_width($text, $font, $size) / 2;
-                $x = ($pdf->get_width() - $width);
-                $y = $pdf->get_height() - 35;
-                $pdf->page_text($x, $y, $text, $font, $size);
-            }
-        </script>
-    </body>
+    <p>
+        {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
+    </p>
+    <p>
+        {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
+    </p>
+
+    <script type="text/php">
+        if (isset($pdf) && $PAGE_COUNT > 1) {
+            $text = "Page {PAGE_NUM} / {PAGE_COUNT}";
+            $size = 10;
+            $font = $fontMetrics->getFont("Verdana");
+            $width = $fontMetrics->get_text_width($text, $font, $size) / 2;
+            $x = ($pdf->get_width() - $width);
+            $y = $pdf->get_height() - 35;
+            $pdf->page_text($x, $y, $text, $font, $size);
+        }
+    </script>
+    </div>
+</body>
 </html>

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Invoice;
 
 use App\Models\User;
 use App\Models\Invoice;
-use Illuminate\Http\Request;
+use App\Models\Project;
 use App\Models\InvoiceStatus;
 use App\Service\InvoiceService;
 use App\Http\Controllers\Controller;
@@ -22,34 +22,45 @@ class InvoiceController extends Controller
 
     public function create()
     {
-        $customers = User::customers()->get();
+        if (!auth()->user()->hasAddress) {
+            return redirect()->route('admin.account.edit')->with([
+                'alertType' => 'danger',
+                'alertMessage' => 'Vous devez mettre à jour votre adresse avant de procéder à une facturation.',
+            ]);
+        }
+
+        $customers = User::customersWithAddress();
 
         if ($customers->isEmpty()) {
-            return redirect()->route('admin.invoices.index')->with([
+            return redirect()->route('admin.customers.index')->with([
                 'alertType' => 'danger',
-                'alertMessage' => 'You need customers before create an invoice.',
-            ]);
-        }
-        if (!auth()->user()->company_name) {
-            return redirect()->back()->with([
-                'alertType' => 'danger',
-                'alertMessage' => 'You need to update informations about your company before create an invoice.',
+                'alertMessage' => 'Vous devez enregistrer des clients avant de procéder à une facturation.',
             ]);
         }
 
-        return view('admin.invoices.create', compact('customers'));
+        $projects = Project::essentialDataByCustomer($customers->first()->id);
+
+        return view('admin.invoices.create', compact('customers', 'projects'));
     }
 
     public function store(CreateInvoiceRequest $request)
     {
         $data = $request->validated();
-        $data['user_id'] = auth()->id();
+        $data['admin_id'] = auth()->id();
+
+        if (!$this->customerHasThisProject($data['customer_id'], $data['project_id'])) {
+            return redirect()->back()->with([
+                'alertType' => 'danger',
+                'alertMessage' => 'Une erreur est survenu.',
+            ]);
+        }
+
         $invoice = InvoiceService::generateInvoice($data);
         $this->saveInvoice($data, $invoice);
 
         return redirect()->route('admin.invoices.index')->with([
             'alertType' => 'success',
-            'alertMessage' => 'Your invoice has been created.',
+            'alertMessage' => 'La facture a bien été générée.',
         ]);
     }
 
@@ -69,13 +80,24 @@ class InvoiceController extends Controller
         ]);
     }
 
+    public function getProjectsByCustomer()
+    {
+        $customerId = request()->customerId;
+        $projects = Project::essentialDataByCustomer($customerId);
+
+        if (request()->ajax()) {
+            return response()->json($projects);
+        }
+    }
+
     private function saveInvoice(array $data, InvoicePackage $invoice)
     {
         $invoiceModel = new Invoice();
 
         $invoiceModel->invoice_id = $invoice->sequence;
-        $invoiceModel->user_id = $data['user_id'];
+        $invoiceModel->admin_id = $data['admin_id'];
         $invoiceModel->customer_id = $data['customer_id'];
+        $invoiceModel->project_id = $data['project_id'];
         $invoiceModel->items = InvoiceService::serializeItems($invoice->items);
         $invoiceModel->file = $invoice->filename;
         $invoiceModel->amount = $invoice->total_amount;
@@ -83,5 +105,21 @@ class InvoiceController extends Controller
         $invoiceModel->due_date = $data['due_date'];
 
         $invoiceModel->save();
+    }
+
+    /**
+     * Check if the project belongs to customer
+     *
+     * @param integer $customerId
+     * @param integer $projectId
+     * @return bool
+     */
+    private function customerHasThisProject(int $customerId, int $projectId)
+    {
+        if (Project::find($projectId)->user->id == $customerId) {
+            return true;
+        }
+
+        return false;
     }
 }

@@ -33,11 +33,11 @@
     </div>
 
     <div class="row justify-content-center">
-        <form action="{{ route('admin.customers.update', $customer) }}" method="POST" class="col-md-6" role="form">
+        <form action="{{ route('admin.customers.update', $customer) }}" method="POST" class="col-md-6 mb-3" role="form">
             @csrf
             @method('PATCH')
 
-            @include('includes.input-array', [
+            @include('includes.form.input-array', [
                 'name' => 'user[firstname]',
                 'simple_name' => 'firstname',
                 'array_name' => 'user.firstname',
@@ -49,7 +49,7 @@
                 'required' => true
             ])
 
-            @include('includes.input-array', [
+            @include('includes.form.input-array', [
                 'name' => 'user[lastname]',
                 'simple_name' => 'lastname',
                 'array_name' => 'user.lastname',
@@ -61,7 +61,7 @@
                 'required' => true
             ])
 
-            @include('includes.input-array', [
+            @include('includes.form.input-array', [
                 'name' => 'user[email]',
                 'simple_name' => 'email',
                 'array_name' => 'user.email',
@@ -75,7 +75,7 @@
 
             <h3 class="h3">Adresse du client</h3>
 
-            @include('includes.input-array', [
+            @include('includes.form.input-array', [
                 'name' => 'address[address_1]',
                 'simple_name' => 'address_1',
                 'array_name' => 'address.address_1',
@@ -86,7 +86,7 @@
                 'helper' => null,
                 'required' => true
             ])
-            @include('includes.input-array', [
+            @include('includes.form.input-array', [
                 'name' => 'address[address_2]',
                 'simple_name' => 'address_2',
                 'array_name' => 'address.address_2',
@@ -99,7 +99,7 @@
             ])
             <div class="row">
                 <div class="col-md-4">
-                    @include('includes.input-array', [
+                    @include('includes.form.input-array', [
                         'name' => 'address[zipcode]',
                         'simple_name' => 'zipcode',
                         'array_name' => 'address.zipcode',
@@ -112,7 +112,7 @@
                     ])
                 </div>
                 <div class="col-md-4">
-                    @include('includes.input-array', [
+                    @include('includes.form.input-array', [
                         'name' => 'address[city]',
                         'simple_name' => 'city',
                         'array_name' => 'address.city',
@@ -125,7 +125,7 @@
                     ])
                 </div>
                 <div class="col-md-4">
-                    @include('includes.input-array', [
+                    @include('includes.form.input-array', [
                         'name' => 'address[country]',
                         'simple_name' => 'country',
                         'array_name' => 'address.country',
@@ -140,7 +140,7 @@
             </div>
             <div class="row">
                 <div class="col-md-6">
-                    @include('includes.input-array', [
+                    @include('includes.form.input-array', [
                         'name' => 'address[phone_1]',
                         'simple_name' => 'phone_1',
                         'array_name' => 'address.phone_1',
@@ -153,7 +153,7 @@
                     ])
                 </div>
                 <div class="col-md-6">
-                    @include('includes.input-array', [
+                    @include('includes.form.input-array', [
                         'name' => 'address[phone_2]',
                         'simple_name' => 'phone_2',
                         'array_name' => 'address.phone_2',

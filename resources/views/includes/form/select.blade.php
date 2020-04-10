@@ -1,6 +1,6 @@
 <div class="form-group">
     <label for="{{ $name }}">{{ $label }}</label>
-    <select class="custom-select @error('{{ $name }}') is-invalid @enderror" name="{{ $name }}" {{ $required ? 'required' : '' }}>
+    <select class="custom-select @error('{{ $name }}') is-invalid @enderror" name="{{ $name }}" id="{{ $name }}" {{ $required ? 'required' : '' }}>
         @foreach ($collection as $item)
             <option value="{{ $item->id }}">{{ $item->name }}</option>
         @endforeach

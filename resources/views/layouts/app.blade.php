@@ -38,10 +38,9 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">Paramètres</a>
+                        <a class="dropdown-item" href="@admin {{ route('admin.settings.index') }} @else {{ route('customer.settings.index') }} @endadmin">Paramètres</a>
                         <a class="dropdown-item" href="#">Journal des logs</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="@admin {{ route('admin.home') }} @else {{ route('customer.home') }} @endadmin">Retourner sur le site</a>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Déconnexion') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf

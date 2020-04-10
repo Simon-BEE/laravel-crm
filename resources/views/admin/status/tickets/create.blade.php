@@ -17,7 +17,7 @@
     <form action="{{ route('admin.status.tickets.store') }}" method="post">
         @csrf
 
-        @include('includes.input', [
+        @include('includes.form.input', [
             'name' => 'name',
             'type' => 'text',
             'label' => 'Nom',

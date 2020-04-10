@@ -171,7 +171,7 @@ class InvoiceService
             'name' => $customer->name,
             'phone' => $customer->address->phone_1 . ' ' . $customer->address->phone_2,
             'email' => $customer->email,
-            'address' => $customer->address->address_1 . ' ' . $customer->address->address_2 . '- <br>' . $customer->address->city, $customer->address->zipcode . '<br>'. $customer->address->country,
+            'address' => $customer->address->address_1 . ' ' . $customer->address->address_2 . '- <br>' . $customer->address->city . ', ' . $customer->address->zipcode . '<br>'. $customer->address->country,
         ]);
     }
 }

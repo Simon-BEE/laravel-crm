@@ -18,16 +18,16 @@ class Invoice extends Model
     public function getItsStatusAttribute()
     {
         switch ($this->status->name) {
-            case 'Pending':
-                $statement = "<span class=\"badge badge-warning\"> " . $this->status->name . "</span>";
+            case 'Provisoire':
+                $statement = "<span class=\"badge badge-secondary\"> " . $this->status->name . "</span>";
                 break;
-            case 'Sent':
-                $statement = "<span class=\"badge badge-info\"> " . $this->status->name . "</span>";
+            case 'Envoyée':
+                $statement = "<span class=\"badge badge-primary\"> " . $this->status->name . "</span>";
                 break;
-            case 'Paid':
+            case 'Payée':
                 $statement = "<span class=\"badge badge-success\"> " . $this->status->name . "</span>";
                 break;
-            case 'Cancelled':
+            case 'Annulée':
                 $statement = "<span class=\"badge badge-danger\"> " . $this->status->name . "</span>";
                 break;
 

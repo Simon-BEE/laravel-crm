@@ -66,8 +66,12 @@
         /* // Address */
         .addresses{
             background-color: #fafafa;
-            height: 10em;
+            height: 12em;
             /* padding: 2em 5em 1em 5em; */
+        }
+
+        .address{
+            height: 12em;
         }
 
         .address div{
@@ -81,7 +85,6 @@
         .address_from{
             float: right
             width: 40%;
-
         }
 
         .address p{
@@ -98,7 +101,6 @@
         .address_to{
             float: right;
             background-color: #26A69A;
-            height: 10em;
             width: 60%;
         }
 
@@ -165,9 +167,12 @@
             border: none;
         }
 
+        tfoot tr td:last-child{
+            padding-right: 5px;
+        }
+
         tfoot tr.total_price td:last-child{
             background-color: #26A69A;
-            padding-right: 5px;
             color: #fff;
         }
 

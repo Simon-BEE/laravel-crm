@@ -63,7 +63,7 @@ return [
         'orientation' => 'portrait',
     ],
 
-    'disk' => 'local',
+    'disk' => 'invoices',
 
     'seller' => [
         /**

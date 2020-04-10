@@ -68,11 +68,11 @@ class User extends Authenticatable
         return $query->where('role_id', $roleId);
     }
 
-    public function scopeCustomersWithAddress($query)
+    public function scopeCustomersWithAddressAndProjects($query)
     {
         $customers = $this->scopeCustomersWithProjects($query)->get();
         return $customers->filter(function($customer, $key){
-            if ($customer->hasAddress && $customer->hasProjects) {
+            if ($customer->hasAddress && $customer->hasProjectsInProgress) {
                 return $customer;
             }
         });
@@ -126,13 +126,13 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if user has project
+     * Check if user has project(s) in progress
      *
      * @return bool
      */
-    public function getHasProjectsAttribute()
+    public function getHasProjectsInProgressAttribute()
     {
-        return $this->projects->isNotEmpty();
+        return Project::isNotEmptyAndArchived($this->projects);
     }
 
     /**

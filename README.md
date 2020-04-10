@@ -27,4 +27,6 @@ Projet personnel qui a pour objectif de créer une structure permettant de gére
 
 ## Todo
 
-- [ ] 
+- [ ] Settings color status [database => color and relations]
+- [ ] Estimates like invoices
+- [ ] Tickets

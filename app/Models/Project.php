@@ -13,8 +13,32 @@ class Project extends Model
 
     protected $with = ['user', 'status'];
 
+    /**
+     * Check if a projects collection is not empty and has projects in progress
+     *
+     * @param [type] $projects
+     * @return boolean
+     */
+    public static function isNotEmptyAndArchived($projects)
+    {
+        $projectsInProgress = $projects->filter(function($project, $key){
+            if ($project && $project->status_id != 3 && $project->status_id != 4) {
+                return $project;
+            }
+        });
+
+        return $projectsInProgress->isNotEmpty() ?? false;
+    }
+
     // SCOPES
 
+    /**
+     * Get only id and name in projects in progress
+     *
+     * @param [type] $query
+     * @param integer $customerId
+     * @return void
+     */
     public function scopeEssentialDataByCustomer($query, int $customerId)
     {
         return $query

@@ -29,9 +29,9 @@ class StatusTableSeeder extends Seeder
         StatusTicket::create(['name' => 'Ré-ouvert']);
 
         //Status for invoices
-        InvoiceStatus::create(['name' => 'Pending']);
-        InvoiceStatus::create(['name' => 'Sent']);
-        InvoiceStatus::create(['name' => 'Paid']);
-        InvoiceStatus::create(['name' => 'Cancelled']);
+        InvoiceStatus::create(['name' => 'Provisoire']);
+        InvoiceStatus::create(['name' => 'Envoyée']);
+        InvoiceStatus::create(['name' => 'Payée']);
+        InvoiceStatus::create(['name' => 'Annulée']);
     }
 }

@@ -12,8 +12,9 @@
 @section('content')
 
     <div class="row justify-content-center">
-        <div class="container shadow p-3 rounded bg-dark text-secondary">
+        <div class="container p-3">
             <div class="title text-center">
+                <span class="float-right">{!! $project->actualStatus !!}</span>
                 <h2 class="display-2">{{ $project->name }}</h2>
             </div>
             <hr>

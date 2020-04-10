@@ -20,6 +20,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Couleur</th>
                     <th scope="col">Nom</th>
                     <th scope="col">Actions</th>
                 </tr>
@@ -28,6 +29,7 @@
                 @foreach ($statuts as $statut)
                     <tr>
                         <th scope="row">{{ $statut->id }}</th>
+                        <td><span class="badge badge-primary">&#x25cf;</span></td>
                         <td>{{ $statut->name }}</td>
                         <td class="">
                             <div class="dropdown">

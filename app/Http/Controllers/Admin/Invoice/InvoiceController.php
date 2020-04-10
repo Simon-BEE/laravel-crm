@@ -9,6 +9,7 @@ use App\Models\InvoiceStatus;
 use App\Service\InvoiceService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateInvoiceRequest;
+use Illuminate\Database\Eloquent\Collection;
 use LaravelDaily\Invoices\Invoice as InvoicePackage;
 
 class InvoiceController extends Controller
@@ -29,12 +30,11 @@ class InvoiceController extends Controller
             ]);
         }
 
-        $customers = User::customersWithAddress();
-
+        $customers = User::customersWithAddressAndProjects();
         if ($customers->isEmpty()) {
             return redirect()->route('admin.customers.index')->with([
                 'alertType' => 'danger',
-                'alertMessage' => 'Vous devez enregistrer des clients avant de procéder à une facturation.',
+                'alertMessage' => 'Vous devez enregistrer des clients avec projet(s) avant de procéder à une facturation.',
             ]);
         }
 
@@ -76,7 +76,7 @@ class InvoiceController extends Controller
 
         return redirect()->route('admin.invoices.index')->with([
             'alertType' => 'success',
-            'alertMessage' => 'Status has been updated.',
+            'alertMessage' => 'Le statut a bien été mis à jour',
         ]);
     }
 
@@ -90,6 +90,13 @@ class InvoiceController extends Controller
         }
     }
 
+    /**
+     * Save in database Invoice's data
+     *
+     * @param array $data
+     * @param InvoicePackage $invoice
+     * @return void
+     */
     private function saveInvoice(array $data, InvoicePackage $invoice)
     {
         $invoiceModel = new Invoice();
@@ -105,6 +112,24 @@ class InvoiceController extends Controller
         $invoiceModel->due_date = $data['due_date'];
 
         $invoiceModel->save();
+    }
+
+    /**
+     * Check if at leat one user has projects
+     *
+     * @param Collection $customers
+     * @return Collection
+     */
+    private function getDefaultCustomerProjects(Collection $customers)
+    {
+        $projects = null;
+        $customers->first(function($customer, $key) use (&$projects){
+            if (($projects = Project::essentialDataByCustomer($customer->id))->isNotEmpty()) {
+                return $customer;
+            }
+        });
+
+        return $projects;
     }
 
     /**

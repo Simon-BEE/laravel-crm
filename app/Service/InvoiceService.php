@@ -73,6 +73,7 @@ class InvoiceService
             ->seller($seller)
             ->buyer($customer)
             ->date($issueDate)
+            ->dateFormat('d/m/Y')
             ->payUntilDays($issueDate->diffInDays($dueDate))
             ->currencyFormat('{SYMBOL}{VALUE}')
             ->filename($dataForm['admin_id'] . '_' . $dataForm['customer_id'] . '_' . $sequence)

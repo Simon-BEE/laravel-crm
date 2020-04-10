@@ -13,10 +13,8 @@ class HomeController extends Controller
      */
     public function __invoke()
     {
-        // $invoice['id'] = 256984;
-
         // $pdf = App::make('dompdf.wrapper');
-        // $pdf->loadView('pdf.invoice', $invoice);
+        // $pdf->loadView('pdf.invoice');
         // // $pdf->save(public_path() . '/invoices/invoice.pdf');
         // return $pdf->stream();
 
@@ -24,6 +22,7 @@ class HomeController extends Controller
             return redirect()->route('login');
         }
 
-        return auth()->user()->isAdmin ? redirect()->route('admin.home') : redirect()->route('customer.home');
+        // return auth()->user()->isAdmin ? redirect()->route('admin.home') : redirect()->route('customer.home');
+        return redirect()->route(auth()->user()->isAdmin ? 'admin.home' : 'customer.home');
     }
 }

@@ -17,13 +17,15 @@
         html, body{
             height: 100%;
             min-height: 100vh;
+            width: 100vw;
         }
 
         body{
             display: flex;flex-direction: column;
             /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
             font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-            font-size: 18px;
+            font-size: 12px;
+            overflow-x: scroll
         }
 
         *.text-light{
@@ -33,12 +35,7 @@
         /* Header */
 
         header{
-            display: flex;justify-content: space-between;align-items: center;
-            padding: 3.5em 0;
-        }
-
-        .top_logo{
-            margin-left: 15vw;
+            margin: 4em 5em;
         }
 
         h1{
@@ -48,12 +45,12 @@
 
         h2{
             letter-spacing: 1.5px;
-            margin-top: -.6em;
+            margin-top: -.2em;
         }
 
         .top_infos{
+            margin-top: -2em;
             text-align: right;
-            margin-right: 15vw;
         }
 
         .subtitle{
@@ -67,14 +64,14 @@
         }
 
         /* // Address */
-        section.addresses{
+        .addresses{
             background-color: #fafafa;
-            display: flex;justify-content: space-between;
+            height: 10em;
+            /* padding: 2em 5em 1em 5em; */
         }
 
-        .address{
-            padding: 4em 0;
-            display: flex;flex-direction: column;
+        .address div{
+            margin-top: 1.5em;
         }
 
         .address p{
@@ -82,37 +79,38 @@
         }
 
         .address_from{
+            float: right
             width: 40%;
+
         }
 
-        .address_from p{
+        .address p{
             color: #78909C;
         }
-
-        .address_from div{
-            margin-left: 15vw;
-        }
-
-        .address_to{
-            width: 60%;
-            background-color: #26A69A;
-        }
-
-        .address_to p, .address_to h3{
+        .address_to p{
             color: #fff;
         }
 
+        .address_from div{
+            margin-left: 5em;
+        }
+
+        .address_to{
+            float: right;
+            background-color: #26A69A;
+            height: 10em;
+            width: 60%;
+        }
+
         .address_to div{
-            margin-right: 15vw;
-            align-self: end;
+            margin-right: 5em;
             text-align: right;
         }
 
         /* // Table */
 
-        section.items_table{
-            margin: 0 15vw;
-            display: flex;flex-direction: column;justify-content: center;
+        .items_table{
+            margin: 0 4em;
         }
 
         table{
@@ -121,15 +119,15 @@
 
         }
 
-        table td{
+        .main_table td{
             text-align: center;
         }
 
-        table .text-left{
+        .main_table .text-left{
             text-align: left;
         }
 
-        table .text-right{
+        .main_table .text-right{
             text-align: right;
         }
 
@@ -169,19 +167,22 @@
 
         tfoot tr.total_price td:last-child{
             background-color: #26A69A;
-            padding-right: 3px;
+            padding-right: 5px;
             color: #fff;
         }
 
-        tfoot tr.total_price .name{
+        tfoot tr.total_price td.name{
             background-color: #efefef;
-            padding-right: 4px;
+        }
+
+        tfoot .name{
+            padding-right: 10px;
         }
 
         /* // Notes */
 
-        section.notes{
-            margin: 2em 15vw;
+        .notes{
+            margin: 2em 5em;
             text-align: justify;
         }
 
@@ -190,7 +191,8 @@
         footer{
             padding: 1.5em 1em;
             text-align: center;
-            display: flex;flex-direction: column;align-items: center;justify-content: center;
+            position: absolute;
+            bottom: 5px;
         }
 
         section.main_footer{
@@ -247,7 +249,7 @@
         </section>
 
         <section class="items_table">
-            <table>
+            <table class="main_table">
                 <thead>
                     <tr>
                         <th scope="col" class="text-left">{{ __('invoices::invoice.description') }}</th>
@@ -266,13 +268,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{-- <tr>
-                        <td class="text-left">Adipisicing elit. Corrupti, voluptates.</td>
-                        <td>2</td>
-                        <td>heure</td>
-                        <td class="text-light">45,00 €</td>
-                        <td class="text-right">90,00 €</td>
-                    </tr> --}}
                     {{-- Items --}}
                     @foreach($invoice->items as $item)
                         <tr>
@@ -301,29 +296,6 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                    {{-- <tr class="empty">
-                        <td colspan="5"></td>
-                    </tr>
-                    <tr class="taxable_amount">
-                        <td class="no-border" colspan="3"></td>
-                        <td class="name text-right">Montant taxable</td>
-                        <td class="text-right">120,00 €</td>
-                    </tr>
-                    <tr class="tax_rates">
-                        <td class="no-border" colspan="3"></td>
-                        <td class="name text-right">Taux de taxe</td>
-                        <td class="text-right">20%</td>
-                    </tr>
-                    <tr class="total_tax">
-                        <td class="no-border" colspan="3"></td>
-                        <td class="name text-right">Montant des taxes</td>
-                        <td class="text-right">20,00 €</td>
-                    </tr>
-                    <tr class="total_price">
-                        <td class="no-border" colspan="3"></td>
-                        <td class="name text-right">Montant total à payer</td>
-                        <td class="text-right">650,25 €</td>
-                    </tr> --}}
                     {{-- Summary --}}
                     <tr class="empty">
                         <td colspan="{{ $invoice->table_columns }}"></td>
@@ -375,8 +347,8 @@
                     @endif
                     <tr class="total_price">
                         <td colspan="{{ $invoice->table_columns - 2 }}" class="no-border"></td>
-                        <td class="text-right pl-0">{{ __('invoices::invoice.total_amount') }}</td>
-                        <td class="text-right pr-0 total-amount">
+                        <td class="text-right name">{{ __('invoices::invoice.total_amount') }}</td>
+                        <td class="text-right total-amount">
                             {{ $invoice->formatCurrency($invoice->total_amount) }}
                         </td>
                     </tr>
@@ -397,7 +369,7 @@
 
     <footer>
         <section class="due_date">
-            <p>Nous vous invitons à effectuer le réglement avant le {{ $invoice->getPayUntilDate() }}</p>
+            <p>Nous vous invitons à effectuer le réglement avant le <strong>{{ $invoice->getPayUntilDate() }}</strong></p>
         </section>
         <section class="main_footer">
             <p>

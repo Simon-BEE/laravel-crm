@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Admin\Invoice;
 
 use App\Models\User;
+use App\Models\Status;
 use App\Models\Invoice;
 use App\Models\Project;
-use App\Models\Status;
+use App\Models\Estimate;
 use App\Service\InvoiceService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateInvoiceRequest;
@@ -16,6 +17,7 @@ class InvoiceController extends Controller
 {
     public function index()
     {
+        // dd(request()->routeIs('admin.invoices.index'));
         $invoices = Invoice::where('admin_id', auth()->id())->latest()->paginate(config('app.pagination'));
         $status = Status::all();
         return view('admin.invoices.index', compact('invoices', 'status'));
@@ -113,6 +115,31 @@ class InvoiceController extends Controller
         $invoiceModel->due_date = $data['due_date'];
 
         $invoiceModel->save();
+    }
+
+    /**
+     * Save in database Estiimate's data
+     *
+     * @param array $data
+     * @param InvoicePackage $invoice
+     * @return void
+     */
+    private function saveEstimate(array $data, InvoicePackage $invoice)
+    {
+        $estimate = new Estimate();
+
+        $estimate->estimate_id = $invoice->sequence;
+        $estimate->admin_id = $data['admin_id'];
+        $estimate->customer_id = $data['customer_id'];
+        $estimate->project_id = $data['project_id'];
+        $estimate->status_id = 1;
+        $estimate->items = InvoiceService::serializeItems($invoice->items);
+        $estimate->file = $invoice->filename;
+        $estimate->amount = $invoice->total_amount;
+        $estimate->issue_date = $data['issue_date'];
+        $estimate->due_date = $data['due_date'];
+
+        $estimate->save();
     }
 
     /**

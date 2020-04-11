@@ -17,25 +17,6 @@ class Invoice extends Model
 
     public function getItsStatusAttribute()
     {
-        // switch ($this->status->name) {
-        //     case 'Provisoire':
-        //         $statement = "<span class=\"badge " . $this->status->color->name . "\"> " . $this->status->name . "</span>";
-        //         break;
-        //     case 'Envoyée':
-        //         $statement = "<span class=\"badge " . $this->status->color->name . "\"> " . $this->status->name . "</span>";
-        //         break;
-        //     case 'Payée':
-        //         $statement = "<span class=\"badge " . $this->status->color->name . "\"> " . $this->status->name . "</span>";
-        //         break;
-        //     case 'Annulée':
-        //         $statement = "<span class=\"badge " . $this->status->color->name . "\"> " . $this->status->name . "</span>";
-        //         break;
-
-        //     default:
-        //         $statement = "<span class=\"badge badge-dark\">Error</span>";
-        //         break;
-        // }
-
         return "<span class=\"badge badge-" . $this->status->color->name . "\"> " . $this->status->name . "</span>";
     }
 

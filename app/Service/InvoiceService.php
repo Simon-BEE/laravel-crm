@@ -19,11 +19,12 @@ class InvoiceService
      *
      * @param array $dataForm
      * @param boolean $saving
+     * @param boolean $estimate
      * @return \LaravelDaily\Invoices\Invoice
      */
-    public static function generateInvoice(array $dataForm, bool $saving = true)
+    public static function generateInvoice(array $dataForm, bool $saving = true, bool $estimate = false)
     {
-        $invoice = self::makeInvoice($dataForm, $saving);
+        $invoice = self::makeInvoice($dataForm, $saving, $estimate);
         return $invoice;
     }
 
@@ -57,7 +58,7 @@ class InvoiceService
      * @param bool $saving
      * @return \LaravelDaily\Invoices\Invoice
      */
-    private static function makeInvoice(array $dataForm, bool $saving)
+    private static function makeInvoice(array $dataForm, bool $saving, bool $estimate)
     {
         $seller = self::addSellerPart($dataForm['admin_id']);
         $customer = self::addCustomerPart($dataForm['customer_id']);
@@ -67,7 +68,7 @@ class InvoiceService
         $dueDate = Carbon::parse($dataForm['due_date']);
         $notes = $dataForm['additionnal'] ? self::additionnalNotes($dataForm['additionnal']) : null;
 
-        $invoice = Invoice::make('Facture')
+        $invoice = Invoice::make($estimate ? 'Devis' : 'Facture')
             ->sequence($sequence)
             ->serialNumberFormat('{SEQUENCE}')
             ->seller($seller)
@@ -79,6 +80,7 @@ class InvoiceService
             ->filename($dataForm['admin_id'] . '_' . $dataForm['customer_id'] . '_' . $sequence)
             ->addItems($items)
             ->taxRate(20)
+            ->template($estimate ? 'estimate' : 'invoice')
         ;
 
         isset($notes) ? $invoice->notes($notes) : null;

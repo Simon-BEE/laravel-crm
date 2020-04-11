@@ -11,15 +11,29 @@ class Estimate extends Model
 
     protected $guarded = ['id'];
 
-    // RELATIONS
+    protected $casts = [
+        "items" => "array",
+    ];
 
-    public function project()
+    public function getItsStatusAttribute()
     {
-        return $this->belongsTo(Ticket::class);
+        return "<span class=\"badge badge-" . $this->status->color->name . "\"> " . $this->status->name . "</span>";
     }
 
-    public function user()
+    // RELATIONS
+
+    public function admin()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'admin_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'customer_id');
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 }

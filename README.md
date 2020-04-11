@@ -27,6 +27,6 @@ Projet personnel qui a pour objectif de créer une structure permettant de gére
 
 ## Todo
 
-- [ ] Settings color status [database => color and relations]
-- [ ] Estimates like invoices
+- [ ] Settings colors
+- [ ] Estimates like invoices (fusion document model with enum type ? or duplicate invoice to estimate)
 - [ ] Tickets

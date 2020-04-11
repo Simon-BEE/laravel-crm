@@ -25,7 +25,7 @@ class ProjectRequest extends FormRequest
     {
         return [
             'user_id' => 'required|exists:users,id',
-            'status_id' => 'required|exists:status_projects,id',
+            'status_id' => 'required|exists:statuses,id',
             'name' => 'required|string|max:255',
             'news' => 'string|max:255',
             'body' => 'required|string|min:25',

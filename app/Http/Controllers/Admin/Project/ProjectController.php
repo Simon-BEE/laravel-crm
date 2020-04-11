@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin\Project;
 
 use App\Models\User;
 use App\Models\Project;
-use App\Models\StatusProject;
+use App\Models\Status;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
 
@@ -29,7 +29,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        $status = StatusProject::all();
+        $status = Status::all();
         $customers = User::customers()->get();
 
         return view('admin.projects.create', compact('status', 'customers'));
@@ -62,7 +62,6 @@ class ProjectController extends Controller
     public function show(Project $project)
     {
         // $project->load('user');
-
         return view('admin.projects.show', compact('project'));
     }
 
@@ -74,7 +73,7 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        $status = StatusProject::all();
+        $status = Status::all();
         $customers = User::customers()->get();
 
         return view('admin.projects.edit', compact('project', 'customers', 'status'));

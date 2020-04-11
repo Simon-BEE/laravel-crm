@@ -15,7 +15,7 @@
         <div class="col-md-6">
             <div class="card text-center">
                 <div class="card-header">
-                    {{$customer->name}}
+                    <strong>{{$customer->name}}</strong>
                 </div>
                 <div class="card-body row">
                     <div class="col-md-6">
@@ -65,6 +65,25 @@
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6 my-4">
+            <h3 class="h3">Factures</h3>
+            @if ($customer->customerInvoices->isEmpty())
+                <p class="text-center">Ce client n'a aucune facture.</p>
+            @else
+                <div class="list-group">
+                    @foreach ($customer->customerInvoices as $invoice)
+                        <a href="{{ asset('storage/invoices/' . $invoice->file ) }}" target="_blank" class="list-group-item list-group-item-action d-flex justify-content-around align-items-center">
+                            <strong>Facture n°{{ $invoice->invoice_id }}</strong>
+                            <p class="m-0">{!! $invoice->itsStatus !!}</p>
+                            <p class="m-0">Montant: <span class="text-info">{{ Formats::formatPrice($invoice->amount) }}</span></p>
+                        </a>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </div>
 

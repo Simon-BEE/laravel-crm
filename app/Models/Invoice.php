@@ -17,26 +17,26 @@ class Invoice extends Model
 
     public function getItsStatusAttribute()
     {
-        switch ($this->status->name) {
-            case 'Provisoire':
-                $statement = "<span class=\"badge badge-secondary\"> " . $this->status->name . "</span>";
-                break;
-            case 'Envoyée':
-                $statement = "<span class=\"badge badge-primary\"> " . $this->status->name . "</span>";
-                break;
-            case 'Payée':
-                $statement = "<span class=\"badge badge-success\"> " . $this->status->name . "</span>";
-                break;
-            case 'Annulée':
-                $statement = "<span class=\"badge badge-danger\"> " . $this->status->name . "</span>";
-                break;
+        // switch ($this->status->name) {
+        //     case 'Provisoire':
+        //         $statement = "<span class=\"badge " . $this->status->color->name . "\"> " . $this->status->name . "</span>";
+        //         break;
+        //     case 'Envoyée':
+        //         $statement = "<span class=\"badge " . $this->status->color->name . "\"> " . $this->status->name . "</span>";
+        //         break;
+        //     case 'Payée':
+        //         $statement = "<span class=\"badge " . $this->status->color->name . "\"> " . $this->status->name . "</span>";
+        //         break;
+        //     case 'Annulée':
+        //         $statement = "<span class=\"badge " . $this->status->color->name . "\"> " . $this->status->name . "</span>";
+        //         break;
 
-            default:
-                $statement = "<span class=\"badge badge-dark\">Error</span>";
-                break;
-        }
+        //     default:
+        //         $statement = "<span class=\"badge badge-dark\">Error</span>";
+        //         break;
+        // }
 
-        return $statement;
+        return "<span class=\"badge badge-" . $this->status->color->name . "\"> " . $this->status->name . "</span>";
     }
 
     // RELATIONS
@@ -53,6 +53,6 @@ class Invoice extends Model
 
     public function status()
     {
-        return $this->belongsTo(InvoiceStatus::class);
+        return $this->belongsTo(Status::class);
     }
 }

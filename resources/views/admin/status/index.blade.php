@@ -1,19 +1,18 @@
 @extends('layouts.app')
 
 @section('title')
-    Liste des statuts de projets
+    Liste des statuts
 @endsection
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="{{ route('admin.projects.index') }}" class="text-info">Liste des projets</a></li>
-    <li class="breadcrumb-item">Liste des statuts de projets</li>
+    <li class="breadcrumb-item">Liste des statuts</li>
 @endsection
 
 @section('content')
 
     <div class="row justify-content-between align-items-center mb-2">
-        <h3 class="h2">Liste des projets</h3>
-        <a href="{{ route('admin.status.projects.create') }}" class="btn btn-info">Ajouter un nouveau statut</a>
+        <h3 class="h2">Liste des statuts</h3>
+        <a href="{{ route('admin.status.create') }}" class="btn btn-info">Ajouter un nouveau statut</a>
     </div>
     <div class="row">
         <table class="table table-hover table-striped">
@@ -26,18 +25,22 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($statuts as $statut)
+                @foreach ($statuses as $status)
                     <tr>
-                        <th scope="row">{{ $statut->id }}</th>
-                        <td><span class="badge badge-primary">&#x25cf;</span></td>
-                        <td>{{ $statut->name }}</td>
+                        <th scope="row">{{ $status->id }}</th>
+                        <td><span class="badge badge-{{$status->color->name}}">&#x25cf;</span></td>
+                        <td>{{ $status->name }}</td>
                         <td class="">
                             <div class="dropdown">
                                 <button class="btn btn-link text-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-ellipsis-v"></i>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                                    <form action="{{ route('admin.status.projects.destroy', $statut) }}" method="post" class="dropdown-item" onsubmit="confirmAction(event)">
+                                    <a class="dropdown-item" href="{{ route('admin.status.edit', $status) }}">
+                                        <i class="fas fa-paint-brush"></i>
+                                        <span class="ml-3">Editer</span>
+                                    </a>
+                                    <form action="{{ route('admin.status.destroy', $status) }}" method="post" class="dropdown-item" onsubmit="confirmAction(event)">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-link p-0 text-danger">

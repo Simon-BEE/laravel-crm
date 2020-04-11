@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin\Status;
 
+use App\Models\Color;
 use Illuminate\Http\Request;
-use App\Models\StatusProject;
+use App\Models\InvoiceStatus;
 use App\Http\Controllers\Controller;
 
-class StatusProjectController extends Controller
+class StatusInvoiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +16,8 @@ class StatusProjectController extends Controller
      */
     public function index()
     {
-        $statuts = StatusProject::all();
-        return view('admin.status.projects.index', compact('statuts'));
+        $statuts = Status::all();
+        return view('admin.status.invoices.index', compact('status'));
     }
 
     /**
@@ -26,7 +27,8 @@ class StatusProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.status.projects.create');
+        $colors = Color::all();
+        return view('admin.status.invoices.create', compact('colors'));
     }
 
     /**
@@ -38,30 +40,31 @@ class StatusProjectController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:255|unique:status_projects,name',
+            'name' => 'required|string|max:255|unique:invoice_statuses,name',
+            'color_id' => 'required|integer|exists:colors,id',
         ]);
 
-        StatusProject::create($data);
+        InvoiceStatus::create($data);
 
-        return redirect()->route('admin.status.projects.index')->with([
+        return redirect()->route('admin.status.invoices.index')->with([
             'alertType' => 'success',
-            'alertMessage' => 'Le status a bien été ajouté.',
+            'alertMessage' => 'Le statut a bien été ajouté.',
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\StatusProject  $statusProject
+     * @param  \App\Models\InvoiceStatus  $statusInvoice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StatusProject $project)
+    public function destroy(InvoiceStatus $statusInvoice)
     {
-        $project->delete();
+        $statusInvoice->delete();
 
-        return redirect()->route('admin.status.projects.index')->with([
+        return redirect()->route('admin.status.invoices.index')->with([
             'alertType' => 'success',
-            'alertMessage' => 'Le status a bien été supprimé.',
+            'alertMessage' => 'Le statut a bien été supprimé.',
         ]);
     }
 }

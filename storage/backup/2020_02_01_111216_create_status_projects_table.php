@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInvoiceStatusesTable extends Migration
+class CreateStatusProjectsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateInvoiceStatusesTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoice_statuses', function (Blueprint $table) {
+        Schema::create('status_projects', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->foreignId('color_id')->constrained();
             $table->string('name');
             $table->timestamps();
         });
@@ -27,6 +28,6 @@ class CreateInvoiceStatusesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_statuses');
+        Schema::dropIfExists('status_projects');
     }
 }

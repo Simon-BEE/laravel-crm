@@ -1,8 +1,7 @@
 <?php
 
-use App\Models\StatusTicket;
-use App\Models\InvoiceStatus;
-use App\Models\StatusProject;
+use App\Models\Color;
+use App\Models\Status;
 use Illuminate\Database\Seeder;
 
 class StatusTableSeeder extends Seeder
@@ -14,24 +13,18 @@ class StatusTableSeeder extends Seeder
      */
     public function run()
     {
-        // Status for project
-        StatusProject::create(['name' => 'En développement']);
-        StatusProject::create(['name' => 'En attente']);
-        StatusProject::create(['name' => 'Terminé']);
-        StatusProject::create(['name' => 'Abandonné']);
+        Color::create(['name' => 'primary']);
+        Color::create(['name' => 'danger']);
+        Color::create(['name' => 'success']);
+        Color::create(['name' => 'info']);
+        Color::create(['name' => 'warning']);
+        Color::create(['name' => 'secondary']);
+        Color::create(['name' => 'dark']);
+        Color::create(['name' => 'light']);
 
-        // Status for ticket
-        StatusTicket::create(['name' => 'En cours']);
-        StatusTicket::create(['name' => 'Fermé']);
-        StatusTicket::create(['name' => 'Ouvert']);
-        StatusTicket::create(['name' => 'En attente']);
-        StatusTicket::create(['name' => 'Résolu']);
-        StatusTicket::create(['name' => 'Ré-ouvert']);
-
-        //Status for invoices
-        InvoiceStatus::create(['name' => 'Provisoire']);
-        InvoiceStatus::create(['name' => 'Envoyée']);
-        InvoiceStatus::create(['name' => 'Payée']);
-        InvoiceStatus::create(['name' => 'Annulée']);
+        Status::create(['name' => 'En cours', 'color_id' => 4]);
+        Status::create(['name' => 'En attente', 'color_id' => 5]);
+        Status::create(['name' => 'Terminé', 'color_id' => 3]);
+        Status::create(['name' => 'Abandonné', 'color_id' => 2]);
     }
 }

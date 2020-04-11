@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin\Status;
 
+use App\Models\Color;
 use App\Models\StatusTicket;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,7 +27,8 @@ class StatusTicketController extends Controller
      */
     public function create()
     {
-        return view('admin.status.tickets.create');
+        $colors = Color::all();
+        return view('admin.status.tickets.create', compact('colors'));
     }
 
     /**
@@ -39,13 +41,14 @@ class StatusTicketController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:255|unique:status_projects,name',
+            'color_id' => 'required|integer|exists:colors,id',
         ]);
 
         StatusTicket::create($data);
 
         return redirect()->route('admin.status.tickets.index')->with([
             'alertType' => 'success',
-            'alertMessage' => 'Le status a bien été ajouté.',
+            'alertMessage' => 'Le statut a bien été ajouté.',
         ]);
     }
 
@@ -55,13 +58,13 @@ class StatusTicketController extends Controller
      * @param  \App\Models\StatusTicket  $statusTicket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StatusTicket $ticket)
+    public function destroy(StatusTicket $statusTicket)
     {
-        $ticket->delete();
+        $statusTicket->delete();
 
         return redirect()->route('admin.status.tickets.index')->with([
             'alertType' => 'success',
-            'alertMessage' => 'Le status a bien été supprimé.',
+            'alertMessage' => 'Le statut a bien été supprimé.',
         ]);
     }
 }

@@ -15,16 +15,13 @@ class CreateProjectsTable extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('status_id');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('status_id')->constrained();
             $table->string('name');
             $table->text('news')->nullable();
             $table->longText('body');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('status_id')->references('id')->on('status_projects');
         });
     }
 

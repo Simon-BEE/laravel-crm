@@ -54,11 +54,7 @@ class Project extends Model
 
     public function getActualStatusAttribute()
     {
-        $status = $this->status->name;
-
-        $color = ($status === 'Terminé') ? 'info' : (($status === 'Abandonné') ? 'danger' : (($status === 'En développement') ? 'success' : 'secondary'));
-
-        return "<span class='badge badge-$color'>$status</span>";
+        return "<span class=\"badge badge-" . $this->status->color->name . "\"> " . $this->status->name . "</span>";
     }
 
     // RELATIONS
@@ -85,6 +81,6 @@ class Project extends Model
 
     public function status()
     {
-        return $this->belongsTo(StatusProject::class);
+        return $this->belongsTo(Status::class);
     }
 }

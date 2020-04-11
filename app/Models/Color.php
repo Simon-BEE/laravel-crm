@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StatusProject extends Model
+class Color extends Model
 {
     protected $fillable = ['name'];
 
-    public function projects()
+    public function status()
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Status::class);
     }
 }

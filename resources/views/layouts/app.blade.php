@@ -93,7 +93,6 @@
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="{{ route('admin.projects.create') }}">Créer un projet</a>
                                         <a class="nav-link" href="{{ route('admin.projects.index') }}">Liste de tous les projets</a>
-                                        <a class="nav-link" href="{{ route('admin.status.projects.index') }}">Gérer les statuts</a>
                                     </nav>
                                 </div>
                                 <!-- -->
@@ -110,7 +109,6 @@
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="#">Créer un ticket</a>
                                         <a class="nav-link" href="#">Liste de tous les tickets</a>
-                                        <a class="nav-link" href="{{ route('admin.status.tickets.index') }}">Gérer les statuts</a>
                                     </nav>
                                 </div>
                                 <!-- -->
@@ -143,6 +141,22 @@
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="{{ route('admin.invoices.create') }}">Créer une facture</a>
                                         <a class="nav-link" href="{{ route('admin.invoices.index') }}">Liste de toutes les factures</a>
+                                    </nav>
+                                </div>
+                                <!-- -->
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseStatus" aria-expanded="false" aria-controls="collapseStatus">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-sticky-note"></i>
+                                    </div>
+                                    Statuts
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <div class="collapse" id="collapseStatus" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="{{ route('admin.status.create') }}">Ajouter un statut</a>
+                                        <a class="nav-link" href="{{ route('admin.status.index') }}">Liste de tous les statuts</a>
                                     </nav>
                                 </div>
                                 <!-- -->

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin\Invoice;
 use App\Models\User;
 use App\Models\Invoice;
 use App\Models\Project;
-use App\Models\InvoiceStatus;
+use App\Models\Status;
 use App\Service\InvoiceService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateInvoiceRequest;
@@ -17,7 +17,7 @@ class InvoiceController extends Controller
     public function index()
     {
         $invoices = Invoice::where('admin_id', auth()->id())->latest()->paginate(config('app.pagination'));
-        $status = InvoiceStatus::all();
+        $status = Status::all();
         return view('admin.invoices.index', compact('invoices', 'status'));
     }
 
@@ -68,7 +68,7 @@ class InvoiceController extends Controller
     {
         $data = request()->validate([
             'invoice' => 'required|integer|exists:invoices,invoice_id',
-            'status_id' => 'required|integer|exists:invoice_statuses,id',
+            'status_id' => 'required|integer|exists:statuses,id',
         ]);
 
         $invoice = Invoice::where('invoice_id', $data['invoice'])->firstOrFail();
@@ -105,6 +105,7 @@ class InvoiceController extends Controller
         $invoiceModel->admin_id = $data['admin_id'];
         $invoiceModel->customer_id = $data['customer_id'];
         $invoiceModel->project_id = $data['project_id'];
+        $invoiceModel->status_id = 1;
         $invoiceModel->items = InvoiceService::serializeItems($invoice->items);
         $invoiceModel->file = $invoice->filename;
         $invoiceModel->amount = $invoice->total_amount;

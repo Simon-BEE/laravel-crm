@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\Project;
 use App\Service\DocumentService;
 use App\Http\Requests\CreateInvoiceRequest;
+use Illuminate\Support\Facades\Validator;
 use LaravelDaily\Invoices\Invoice as InvoicePackage;
 
 class InvoiceController extends DocumentController
@@ -75,7 +76,7 @@ class InvoiceController extends DocumentController
     public function updateStatus()
     {
         $data = request()->validate([
-            'invoice' => 'required|integer|exists:invoices,invoice_id',
+            'invoice' => 'required|exists:invoices,invoice_id',
             'status_id' => 'required|integer|exists:statuses,id',
         ]);
 

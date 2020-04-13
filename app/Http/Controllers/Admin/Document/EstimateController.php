@@ -35,7 +35,7 @@ class EstimateController extends DocumentController
         if ($customers->isEmpty()) {
             return redirect()->route('admin.customers.index')->with([
                 'alertType' => 'danger',
-                'alertMessage' => 'Vous devez enregistrer des clients avec projet(s) avant de procéder à une facturation.',
+                'alertMessage' => 'Vous devez enregistrer des clients avec projet(s) avant de procéder à un devis.',
             ]);
         }
 
@@ -64,7 +64,7 @@ class EstimateController extends DocumentController
 
         return redirect()->route('admin.estimates.index')->with([
             'alertType' => 'success',
-            'alertMessage' => 'La facture a bien été générée.',
+            'alertMessage' => 'Le devis a bien été générée.',
         ]);
     }
 
@@ -76,7 +76,7 @@ class EstimateController extends DocumentController
     public function updateStatus()
     {
         $data = request()->validate([
-            'estimate' => 'required|integer|exists:estimates,estimate_id',
+            'estimate' => 'required|exists:estimates,estimate_id',
             'status_id' => 'required|integer|exists:statuses,id',
         ]);
 

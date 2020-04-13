@@ -48,8 +48,6 @@ class User extends Authenticatable
      */
     protected $softCascade = ['projects', 'tickets', 'replies', 'adresses'];
 
-    // protected $with = ['address'];
-
     protected static function boot(){
         parent::boot();
 
@@ -65,7 +63,12 @@ class User extends Authenticatable
     public function scopeCustomers($query)
     {
         $roleId = Role::where('name', 'customer')->first()->id;
-        return $query->where('role_id', $roleId);
+        return $query->where('role_id', $roleId)->with('address');
+    }
+
+    public function scopeCustomersWithProjects($query)
+    {
+        return  $this->scopeCustomers($query)->with('projects');
     }
 
     public function scopeCustomersWithAddressAndProjects($query)
@@ -76,11 +79,6 @@ class User extends Authenticatable
                 return $customer;
             }
         });
-    }
-
-    public function scopeCustomersWithProjects($query)
-    {
-        return  $this->scopeCustomers($query)->with('projects');
     }
 
     // ATTRIBUTES

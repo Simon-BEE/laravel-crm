@@ -11,7 +11,7 @@ class Project extends Model
 
     protected $guarded = ['id'];
 
-    protected $with = ['user', 'status'];
+    // protected $with = ['user', 'status'];
 
     /**
      * Check if a projects collection is not empty and has projects in progress

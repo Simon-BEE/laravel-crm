@@ -38,7 +38,7 @@ Liste des devis
                             <td class="w-25">
                                 <div class="">
                                     <a href="{{ asset('storage/estimates/' . $estimate->file ) }}" target="_blank" class="btn btn-info">Voir</a>
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#changeStatusModal" data-invoice="{{ $estimate->invoice_id }}" onclick="changeStatusModal(event)">Changer le statut</button>
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#changeStatusModal" data-estimate="{{ $estimate->estimate_id }}" onclick="changeStatusModal(event)">Changer le statut</button>
                                 </div>
                             </td>
                         </tr>
@@ -60,10 +60,10 @@ Liste des devis
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('admin.estimates.status.update') }}" method="post" class="formChangeInvoiceStatus">
+                <form action="{{ route('admin.estimates.status.update') }}" method="post" class="formChangeEstimateStatus">
                     @csrf
                     @method('PATCH')
-                    <input type="hidden" name="invoice" value="" id="hiddenModalInput">
+                    <input type="hidden" name="estimate" value="" id="hiddenModalEstimate">
 
                     @include('includes.form.select', [
                         'name' => 'status_id',
@@ -87,11 +87,12 @@ Liste des devis
 <script>
     function changeStatusModal(e) {
         e.preventDefault();
+        console.log(e.target.dataset)
         $('#changeStatusModal').modal('show');
-        document.getElementById('hiddenModalInput').value = e.target.dataset.invoice
-        document.getElementById('thereInvoice').innerHTML = e.target.dataset.invoice
+        document.getElementById('hiddenModalEstimate').value = e.target.dataset.estimate
+        document.getElementById('thereInvoice').innerHTML = e.target.dataset.estimate
         document.getElementById('confirmChange').onclick = () => {
-            document.getElementsByClassName('formChangeInvoiceStatus')[0].submit();
+            document.getElementsByClassName('formChangeEstimateStatus')[0].submit();
         };
     }
 </script>

@@ -6,7 +6,7 @@ Généreration d'une devis
 
 @section('breadcrumb')
     <li class="breadcrumb-item"><a class="text-info" href="{{ route('admin.estimates.index') }}">Liste des devis</a></li>
-    <li class="breadcrumb-item active">Généreration d'une devis</li>
+    <li class="breadcrumb-item active">Généreration d'un devis</li>
 @endsection
 
 @section('content')

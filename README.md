@@ -30,3 +30,4 @@ Projet personnel qui a pour objectif de créer une structure permettant de gére
 - [ ] Settings colors
 - [ ] Estimates like invoices (fusion document model with enum type ? or duplicate invoice to estimate)
 - [ ] Tickets
+- [ ] Multiple selection in table to do an action

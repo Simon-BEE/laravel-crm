@@ -1,24 +1,24 @@
 @extends('layouts.app')
 
 @section('title')
-Généreration d'une facture
+Généreration d'une devis
 @endsection
 
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a class="text-info" href="{{ route('admin.invoices.index') }}">Liste des factures</a></li>
-    <li class="breadcrumb-item active">Généreration d'une facture</li>
+    <li class="breadcrumb-item"><a class="text-info" href="{{ route('admin.estimates.index') }}">Liste des devis</a></li>
+    <li class="breadcrumb-item active">Généreration d'une devis</li>
 @endsection
 
 @section('content')
     <div class="card mt-3">
         <div class="card-body">
             <h3>
-                Création de facture
+                Création de devis
             </h3>
             <hr>
         </div>
         <div class="card-body">
-            <form action="{{ route('admin.invoices.store') }}" method="post">
+            <form action="{{ route('admin.estimates.store') }}" method="post">
                 @csrf
                 <!-- Informations invoice -->
                 <div class="row">
@@ -36,9 +36,9 @@ Généreration d'une facture
                             'required' => true,
                         ])
                         @include('includes.form.input', [
-                            'name' => 'due_date',
+                            'name' => 'limit_date',
                             'type' => 'date',
-                            'label' => 'Date limite de paiement',
+                            'label' => 'Date limite du devis',
                             'placeholder' => 'Invoice\'s due date',
                             'property' => 'null',
                             'helper' => null,
@@ -88,7 +88,7 @@ Généreration d'une facture
                                 <div class="form-group w-75 d-flex align-items-end">
                                     <div class="upside flex-grow-1">
                                         <label for="item_1">Élément numéro 1</label>
-                                        <input type="text" name="items[]" id="item_1" placeholder="Élément de facture" class="form-control @error('items[]') is-invalid @enderror" required>
+                                        <input type="text" name="items[]" id="item_1" placeholder="Élément de devis" class="form-control @error('items[]') is-invalid @enderror" required>
                                     </div>
                                 </div>
                                 <div class="form-group mx-1">
@@ -118,7 +118,7 @@ Généreration d'une facture
                         @include('includes.form.textarea', [
                         'name' => 'additionnal',
                         'label' => 'Notes additionnelles',
-                        'placeholder' => 'Notes additionnelles de la facture',
+                        'placeholder' => 'Notes additionnelles du devis',
                         'property' => 'null',
                         'helper' => 'Séparer les lignes par une virgule.',
                         'required' => true,

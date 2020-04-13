@@ -17,7 +17,7 @@ class PermissionsSeeder extends Seeder
         $customerRole = Role::create(['name' => 'customer']);
         $adminRole = Role::create(['name' => 'admin']);
 
-        User::create([
+        $admin = User::create([
             'firstname' => 'Simon',
             'lastname' => 'Bée',
             'email' => 'simonbee1303@gmail.com',
@@ -33,6 +33,14 @@ class PermissionsSeeder extends Seeder
             'email' => 'dédé@gmail.com',
             'password' => Hash::make('123123'),
             'role_id' => $customerRole->id,
+        ]);
+
+        $admin->address()->update([
+            'address_1' => '3 route de la bergerette',
+            'city' => 'Terjat',
+            'zipcode' => '03420',
+            'country' => 'France',
+            'phone_1' => '0617841434',
         ]);
 
         factory(User::class, 30)->create();

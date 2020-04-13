@@ -5,21 +5,21 @@ return [
         /**
          * Carbon date format
          */
-        'format'         => 'Y-m-d',
+        'format'         => 'd/m/Y',
         /**
          * Due date for payment since invoice's date.
          */
-        'pay_until_days' => 7,
+        'pay_until_days' => 30,
     ],
 
     'serial_number' => [
-        'series'           => 'AA',
+        'series'           => 'F' . date('Ym'),
         'sequence'         => 1,
         /**
          * Sequence will be padded accordingly, for ex. 00001
          */
         'sequence_padding' => 5,
-        'delimiter'        => '.',
+        'delimiter'        => '-',
         /**
          * Supported tags {SERIES}, {DELIMITER}, {SEQUENCE}
          * Example: AA.00001

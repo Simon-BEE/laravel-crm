@@ -14,16 +14,19 @@ class CreateEstimatesTable extends Migration
     public function up()
     {
         Schema::create('estimates', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('project_id');
-            $table->longText('body');
-            $table->integer('amount')->nullable();
+            $table->id();
+            $table->string('estimate_id')->unique();
+            $table->foreignId('admin_id')->constrained('users');
+            $table->foreignId('customer_id')->constrained('users');
+            $table->foreignId('project_id')->constrained();
+            $table->foreignId('status_id')->constrained();
+            $table->longText('items');
+            $table->string('file')->nullable();
+            $table->integer('amount');
+            $table->dateTime('issue_date');
+            $table->dateTime('limit_date');
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('project_id')->references('id')->on('projects');
         });
     }
 

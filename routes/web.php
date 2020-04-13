@@ -33,11 +33,16 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function(){
             Route::resource('projects', 'ProjectController');
         });
 
-        // Invoices
-        Route::group(['namespace' => 'Invoice'], function () {
+        // Documents
+        Route::group(['namespace' => 'Document'], function () {
+            // Invoices
             Route::resource('invoices', 'InvoiceController')->only('index', 'create','store');
             Route::patch('invoices', 'InvoiceController@updateStatus')->name('invoices.status.update');
             Route::post('invoices/projects', 'InvoiceController@getProjectsByCustomer')->name('invoices.customer.projects');
+            // Estimates
+            Route::resource('estimates', 'EstimateController')->only('index', 'create','store');
+            Route::patch('estimates', 'EstimateController@updateStatus')->name('estimates.status.update');
+            Route::post('estimates/projects', 'EstimateController@getProjectsByCustomer')->name('estimates.customer.projects');
         });
 
         // Status

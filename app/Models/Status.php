@@ -8,6 +8,7 @@ class Status extends Model
 {
     protected $fillable = ['name', 'color_id'];
 
+    protected $with = ['color'];
 
     // RELATIONS
 

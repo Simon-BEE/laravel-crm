@@ -123,8 +123,8 @@
                                 </a>
                                 <div class="collapse" id="collapseEstimates" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="#">Créer un devis</a>
-                                        <a class="nav-link" href="#">Liste de tous les devis</a>
+                                        <a class="nav-link" href="{{ route('admin.estimates.create') }}">Créer un devis</a>
+                                        <a class="nav-link" href="{{ route('admin.estimates.index') }}">Liste de tous les devis</a>
                                     </nav>
                                 </div>
                                 <!-- -->

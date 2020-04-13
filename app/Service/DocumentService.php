@@ -6,13 +6,14 @@ use Carbon\Carbon;
 use App\Models\User;
 use LaravelDaily\Invoices\Invoice;
 use App\Models\Invoice as InvoiceModel;
+use Illuminate\Support\Facades\DB;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
 /**
  * From this package https://github.com/LaravelDaily/laravel-invoices
  */
-class InvoiceService
+class DocumentService
 {
     /**
      * Undocumented function
@@ -22,21 +23,10 @@ class InvoiceService
      * @param boolean $estimate
      * @return \LaravelDaily\Invoices\Invoice
      */
-    public static function generateInvoice(array $dataForm, bool $saving = true, bool $estimate = false)
+    public static function generateDocument(array $dataForm, bool $estimate = false, bool $saving = true)
     {
-        $invoice = self::makeInvoice($dataForm, $saving, $estimate);
+        $invoice = self::makeDocument($dataForm, $estimate, $saving);
         return $invoice;
-    }
-
-    /**
-     * Get disk path of this invoice
-     *
-     * @param \LaravelDaily\Invoices\Invoice $invoice
-     * @return string
-     */
-    public static function getInvoicePath(Invoice $invoice)
-    {
-        return $invoice->url();
     }
 
     /**
@@ -51,22 +41,23 @@ class InvoiceService
     }
 
     /**
-     * Create a new invoice with form data
+     * Create a new document with form data
      * Save on the disk by default
      *
      * @param array $dataForm
      * @param bool $saving
      * @return \LaravelDaily\Invoices\Invoice
      */
-    private static function makeInvoice(array $dataForm, bool $saving, bool $estimate)
+    private static function makeDocument(array $dataForm, bool $estimate, bool $saving)
     {
         $seller = self::addSellerPart($dataForm['admin_id']);
         $customer = self::addCustomerPart($dataForm['customer_id']);
-        $items = self::createInvoiceItems($dataForm);
-        $sequence = self::uniqueInvoiceId();
+        $items = self::createItems($dataForm);
+        $sequence = self::uniqueId($estimate);
         $issueDate = Carbon::parse($dataForm['issue_date']);
-        $dueDate = Carbon::parse($dataForm['due_date']);
+        $dueDate = Carbon::parse($estimate ? $dataForm['limit_date'] : $dataForm['due_date']);
         $notes = $dataForm['additionnal'] ? self::additionnalNotes($dataForm['additionnal']) : null;
+        $fileName = date('Ym') . '_' .$dataForm['admin_id'] . '-' . $dataForm['customer_id'] . '_' . $sequence;
 
         $invoice = Invoice::make($estimate ? 'Devis' : 'Facture')
             ->sequence($sequence)
@@ -76,8 +67,7 @@ class InvoiceService
             ->date($issueDate)
             ->dateFormat('d/m/Y')
             ->payUntilDays($issueDate->diffInDays($dueDate))
-            ->currencyFormat('{SYMBOL}{VALUE}')
-            ->filename($dataForm['admin_id'] . '_' . $dataForm['customer_id'] . '_' . $sequence)
+            ->filename(($estimate ? 'D-' : 'F-') . $fileName)
             ->addItems($items)
             ->taxRate(20)
             ->template($estimate ? 'estimate' : 'invoice')
@@ -85,7 +75,7 @@ class InvoiceService
 
         isset($notes) ? $invoice->notes($notes) : null;
 
-        isset($saving) ? $invoice->save() : null;
+        isset($saving) ? $invoice->save($estimate ? 'estimates' : 'invoices') : null;
 
         return $invoice;
     }
@@ -95,15 +85,11 @@ class InvoiceService
      *
      * @return integer
      */
-    private static function uniqueInvoiceId()
+    private static function uniqueId(bool $estimate)
     {
-        $sequence = mt_rand(112123, 999999);
+        $lastId = $estimate ? (DB::table('estimates')->latest()->first()->id ?? 0) : (DB::table('invoices')->latest()->first()->id ?? 0);
 
-        if (InvoiceModel::where('invoice_id', $sequence)->first()) {
-            return self::uniqueInvoiceId($sequence);
-        }
-
-        return $sequence;
+        return $lastId + 45;
     }
 
     /**
@@ -124,7 +110,7 @@ class InvoiceService
      * @param array $dataForm
      * @return void
      */
-    private static function createInvoiceItems(array $dataForm)
+    private static function createItems(array $dataForm)
     {
         // $dataForm['items'], $dataForm['qty_items'], $dataForm['price_items']
         $items = [];
@@ -151,7 +137,7 @@ class InvoiceService
         $seller = User::find($id);
         return new Party([
             'name' => $seller->name,
-            'address' => $seller->address->address_1 . ' ' . $seller->address->address_2 . '- <br>' . $seller->address->city . ', ' . $seller->address->zipcode . '<br>'. $seller->address->country,
+            'address' => $seller->address->address_1 . ' ' . $seller->address->address_2 . '<br>' . $seller->address->city . ', ' . $seller->address->zipcode . '<br>'. $seller->address->country,
             'phone' => $seller->address->phone_1 . ' ' . $seller->address->phone_2,
             'custom_fields' => [
                 'email' => $seller->email,
@@ -173,7 +159,7 @@ class InvoiceService
             'name' => $customer->name,
             'phone' => $customer->address->phone_1 . ' ' . $customer->address->phone_2,
             'email' => $customer->email,
-            'address' => $customer->address->address_1 . ' ' . $customer->address->address_2 . '- <br>' . $customer->address->city . ', ' . $customer->address->zipcode . '<br>'. $customer->address->country,
+            'address' => $customer->address->address_1 . ' ' . $customer->address->address_2 . '<br>' . $customer->address->city . ', ' . $customer->address->zipcode . '<br>'. $customer->address->country,
         ]);
     }
 }

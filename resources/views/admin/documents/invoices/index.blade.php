@@ -31,7 +31,7 @@ Liste des factures
                             @if ($invoice->customer)
                                 <td class="w-25"><a href="{{ route('admin.customers.show', $invoice->customer) }}">{{ $invoice->customer->name }}</a></td>
                             @else
-                                <td class="w-25">Deleted user</td>
+                                <td class="w-25">Client supprimé</td>
                             @endif
                             <td class="w-25">{{ Formats::formatPrice($invoice->amount) }}</td>
                             <td class="w-25">{!! $invoice->itsStatus !!}</td>

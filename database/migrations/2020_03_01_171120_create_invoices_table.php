@@ -15,7 +15,7 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('invoice_id');
+            $table->string('invoice_id')->unique();
             $table->foreignId('admin_id')->constrained('users');
             $table->foreignId('customer_id')->constrained('users');
             $table->foreignId('project_id')->constrained();

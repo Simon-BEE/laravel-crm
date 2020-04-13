@@ -1,17 +1,17 @@
 @extends('layouts.app')
 
 @section('title')
-Liste des factures
+Liste des devis
 @endsection
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active">Liste des factures</li>
+    <li class="breadcrumb-item active">Liste des devis</li>
 @endsection
 
 @section('content')
             <div class="row justify-content-between align-items-center mb-2">
-                <h3 class="h2">Liste des factures</h3>
-                <a href="{{ route('admin.invoices.create') }}" class="btn btn-info">Créer une nouvelle facture</a>
+                <h3 class="h2">Liste des devis</h3>
+                <a href="{{ route('admin.invoices.create') }}" class="btn btn-info">Créer un nouveau devis</a>
             </div>
         <div class="row">
             <table class="table table-hover">
@@ -25,20 +25,20 @@ Liste des factures
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($invoices as $invoice)
+                    @foreach ($estimates as $estimate)
                         <tr>
-                            <th scope="row">{{ $invoice->invoice_id }}</th>
-                            @if ($invoice->customer)
-                                <td class="w-25"><a href="{{ route('admin.customers.show', $invoice->customer) }}">{{ $invoice->customer->name }}</a></td>
+                            <th scope="row">{{ $estimate->invoice_id }}</th>
+                            @if ($estimate->customer)
+                                <td class="w-25"><a href="{{ route('admin.customers.show', $estimate->customer) }}">{{ $estimate->customer->name }}</a></td>
                             @else
-                                <td class="w-25">Deleted user</td>
+                                <td class="w-25">Client supprimé</td>
                             @endif
-                            <td class="w-25">{{ Formats::formatPrice($invoice->amount) }}</td>
-                            <td class="w-25">{!! $invoice->itsStatus !!}</td>
+                            <td class="w-25">{{ Formats::formatPrice($estimate->amount) }}</td>
+                            <td class="w-25">{!! $estimate->itsStatus !!}</td>
                             <td class="w-25">
                                 <div class="">
-                                    <a href="{{ asset('storage/invoices/' . $invoice->file ) }}" target="_blank" class="btn btn-info">Voir</a>
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#changeStatusModal" data-invoice="{{ $invoice->invoice_id }}" onclick="changeStatusModal(event)">Changer le statut</button>
+                                    <a href="{{ asset('storage/estimates/' . $estimate->file ) }}" target="_blank" class="btn btn-info">Voir</a>
+                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#changeStatusModal" data-invoice="{{ $estimate->invoice_id }}" onclick="changeStatusModal(event)">Changer le statut</button>
                                 </div>
                             </td>
                         </tr>
@@ -46,7 +46,7 @@ Liste des factures
                 </tbody>
             </table>
             <div class="row justify-content-center mt-5">
-                {{ $invoices->links() }}
+                {{ $estimates->links() }}
             </div>
         </div>
 
@@ -54,13 +54,13 @@ Liste des factures
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="changeStatusModalLabel">Changement du statut de la facture n°<span id="thereInvoice"></span></h5>
+                <h5 class="modal-title" id="changeStatusModalLabel">Changement du statut du devis n°<span id="thereInvoice"></span></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ route('admin.invoices.status.update') }}" method="post" class="formChangeInvoiceStatus">
+                <form action="{{ route('admin.estimates.status.update') }}" method="post" class="formChangeInvoiceStatus">
                     @csrf
                     @method('PATCH')
                     <input type="hidden" name="invoice" value="" id="hiddenModalInput">

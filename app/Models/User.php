@@ -46,9 +46,9 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $softCascade = ['projects', 'tickets', 'replies'];
+    protected $softCascade = ['projects', 'tickets', 'replies', 'adresses'];
 
-    protected $with = ['address'];
+    // protected $with = ['address'];
 
     protected static function boot(){
         parent::boot();

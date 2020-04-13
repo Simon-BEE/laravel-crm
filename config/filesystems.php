@@ -61,6 +61,12 @@ return [
             'url' => env('APP_URL').'/storage/invoices',
             'visibility' => 'public',
         ],
+        'estimates' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/estimates'),
+            'url' => env('APP_URL').'/storage/estimates',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver' => 's3',

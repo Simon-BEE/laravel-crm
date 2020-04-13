@@ -374,7 +374,7 @@
 
     <footer>
         <section class="due_date">
-            <p>Nous vous invitons à effectuer le réglement avant le <strong>{{ $invoice->getPayUntilDate() }}</strong></p>
+            <p>Ce devis est valable juqu'à la date suivante: <strong>{{ $invoice->getPayUntilDate() }}</strong></p>
         </section>
         <section class="main_footer">
             <p>
@@ -386,11 +386,6 @@
                 <span><strong>Société</strong> SKYMON.fr</span>
                 <span><strong>N°Siret</strong> 45665798954</span>
                 <span><strong>N°TVA</strong> 78784564</span>
-            </p>
-            <p>
-                <span><strong>Banque</strong> SHINE</span>
-                <span><strong>Titulaire du compte</strong> Simon Bée</span>
-                <span><strong>IBAN</strong> FR76 4589 6446 1236 21</span>
             </p>
         </section>
     </footer>

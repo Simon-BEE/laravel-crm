@@ -109,6 +109,8 @@
                                     <nav class="sb-sidenav-menu-nested nav">
                                         <a class="nav-link" href="#">Créer un ticket</a>
                                         <a class="nav-link" href="#">Liste de tous les tickets</a>
+                                        <a class="nav-link" href="{{ route('admin.priorities.index') }}">Priorités</a>
+                                        <a class="nav-link" href="{{ route('admin.issues.index') }}">Problèmes</a>
                                     </nav>
                                 </div>
                                 <!-- -->

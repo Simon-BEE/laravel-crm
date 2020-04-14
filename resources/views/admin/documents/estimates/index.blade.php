@@ -27,7 +27,7 @@ Liste des devis
                 <tbody>
                     @foreach ($estimates as $estimate)
                         <tr>
-                            <th scope="row">{{ $estimate->invoice_id }}</th>
+                            <th scope="row">{{ $estimate->estimate_id }}</th>
                             @if ($estimate->customer)
                                 <td class="w-25"><a href="{{ route('admin.customers.show', $estimate->customer) }}">{{ $estimate->customer->name }}</a></td>
                             @else
@@ -70,7 +70,9 @@ Liste des devis
                         'label' => 'Choisir un nouveau statut',
                         'collection' => $status,
                         'helper' => null,
-                        'required' => true
+                        'required' => true,
+                        'selected' => null,
+                        'property' => null,
                     ])
                 </form>
             </div>

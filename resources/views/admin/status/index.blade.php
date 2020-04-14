@@ -28,7 +28,7 @@
                 @foreach ($statuses as $status)
                     <tr>
                         <th scope="row">{{ $status->id }}</th>
-                        <td><span class="badge badge-{{$status->color->name}}">&#x25cf;</span></td>
+                        <td><span class="badge badge-{{$status->color->name}}">&emsp;</span></td>
                         <td>{{ $status->name }}</td>
                         <td class="">
                             <div class="dropdown">
@@ -56,6 +56,6 @@
             </tbody>
         </table>
     </div>
-    @include('includes.delete-modal')
+    @include('includes.modal.delete-modal')
 @endsection
 

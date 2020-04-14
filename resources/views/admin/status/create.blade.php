@@ -26,13 +26,22 @@
             'required' => true
         ])
 
-        @include('includes.form.select', [
-            'name' => 'color_id',
-            'label' => 'Choisissez une couleur',
-            'collection' => $colors,
-            'helper' => null,
-            'required' => true
-        ])
+        <div class="row align-items-center">
+            <div class="col-1">
+                <span id="colorExample" class="badge badge-primary" style="height:25px;width:25px;">&emsp;</span>
+            </div>
+            <div class="col-11">
+                @include('includes.form.select', [
+                    'name' => 'color_id',
+                    'label' => 'Choisissez une couleur',
+                    'collection' => $colors,
+                    'helper' => null,
+                    'required' => true,
+                    'selected' => null,
+                    'property' => null,
+                ])
+            </div>
+        </div>
 
         <div class="text-right">
             <button type="submit" class="btn btn-info">Créer</button>
@@ -41,4 +50,18 @@
     </form>
 </div>
 
+@endsection
+
+@section('javascript')
+    <script>
+        const spanColor = document.getElementById('colorExample');
+        const selectInput = document.getElementById('color_id');
+        selectInput.addEventListener('change', changeColor);
+
+        function changeColor(event) {
+            let colorValue = this.options[this.selectedIndex].text;
+            spanColor.className = '';
+            spanColor.classList.add('badge', 'badge-' + colorValue);
+        }
+    </script>
 @endsection

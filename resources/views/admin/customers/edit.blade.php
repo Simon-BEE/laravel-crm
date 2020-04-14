@@ -175,4 +175,4 @@
 
 @endsection
 
-@include('includes.delete-modal')
+@include('includes.modal.delete-modal')

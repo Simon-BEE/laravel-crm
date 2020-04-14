@@ -66,14 +66,18 @@ Généreration d'une devis
                             'label' => 'Choisissez un client',
                             'collection' => $customers,
                             'helper' => 'Si votre client n\'apparait pas c\'est qu\'il n\'a pas de projet(s) affilié(s).',
-                            'required' => true
+                            'required' => true,
+                            'selected' => null,
+                            'property' => null,
                         ])
                         @include('includes.form.select', [
                             'name' => 'project_id',
                             'label' => 'Choisissez un projet',
                             'collection' => $projects,
                             'helper' => null,
-                            'required' => true
+                            'required' => true,
+                            'selected' => null,
+                            'property' => null,
                         ])
                     </div>
                 </div>

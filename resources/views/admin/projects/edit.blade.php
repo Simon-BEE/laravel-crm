@@ -45,7 +45,9 @@
                 'label' => 'Définir le client associé',
                 'collection' => $customers,
                 'helper' => "Si aucun client ne correspond, veuillez en <strong>créer un nouveau</strong> avant de procéder à la suite.",
-                'required' => true
+                'required' => true,
+                'selected' => true,
+                'property' => $project->user,
             ])
 
             @include('includes.form.input', [
@@ -63,7 +65,9 @@
                 'label' => 'Choisir un statut',
                 'collection' => $status,
                 'helper' => 'Par défaut le status <strong>En développement</strong> est affecté.',
-                'required' => false
+                'required' => false,
+                'selected' => true,
+                'property' => $project->status,
             ])
 
             @include('includes.form.textarea', [
@@ -84,7 +88,7 @@
 
 @endsection
 
-@include('includes.delete-modal')
+@include('includes.modal.delete-modal')
 @section('javascript')
     @include('includes.wysiwyg', ['id' => 'body', 'property' => $project])
 @endsection

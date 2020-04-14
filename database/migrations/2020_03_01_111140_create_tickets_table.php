@@ -18,6 +18,8 @@ class CreateTicketsTable extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('project_id')->constrained();
             $table->foreignId('status_id')->constrained();
+            $table->foreignId('issue_id')->constrained();
+            $table->foreignId('priority_id')->constrained();
             $table->string('name');
             $table->longText('body');
             $table->timestamps();

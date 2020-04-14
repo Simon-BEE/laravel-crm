@@ -70,7 +70,9 @@ Liste des factures
                         'label' => 'Choisir un nouveau statut',
                         'collection' => $status,
                         'helper' => null,
-                        'required' => true
+                        'required' => true,
+                        'selected' => null,
+                        'property' => null,
                     ])
                 </form>
             </div>

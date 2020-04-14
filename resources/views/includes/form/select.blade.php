@@ -2,7 +2,11 @@
     <label for="{{ $name }}">{{ $label }}</label>
     <select class="custom-select @error('{{ $name }}') is-invalid @enderror" name="{{ $name }}" id="{{ $name }}" {{ $required ? 'required' : '' }}>
         @foreach ($collection as $item)
-            <option value="{{ $item->id }}">{{ $item->name }}</option>
+            @if ($selected && $item->id == $property->id)
+                <option value="{{ $item->id }}" selected>{{ $item->name }}</option>
+            @else
+                <option value="{{ $item->id }}">{{ $item->name }}</option>
+            @endif
         @endforeach
     </select>
     @if ($helper)

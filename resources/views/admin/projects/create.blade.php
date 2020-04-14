@@ -31,7 +31,9 @@
             'label' => 'Définir le client associé',
             'collection' => $customers,
             'helper' => "Si aucun client ne correspond, veuillez en <strong>créer un nouveau</strong> avant de procéder à la suite.",
-            'required' => true
+            'required' => true,
+            'selected' => null,
+            'property' => null,
         ])
 
         @include('includes.form.input', [
@@ -49,7 +51,9 @@
             'label' => 'Choisir un statut',
             'collection' => $status,
             'helper' => 'Par défaut le status <strong>En développement</strong> est affecté.',
-            'required' => false
+            'required' => false,
+            'selected' => null,
+            'property' => null,
         ])
 
         @include('includes.form.textarea', [

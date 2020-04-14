@@ -63,6 +63,6 @@
     <div class="row justify-content-center my-3">
         {{ $projects->links() }}
     </div>
-    @include('includes.delete-modal')
+    @include('includes.modal.delete-modal')
 @endsection
 

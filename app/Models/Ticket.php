@@ -9,6 +9,8 @@ class Ticket extends Model
 {
     use SoftDeletes;
 
+    protected $guarded = ['id'];
+
     // RELATIONS
 
     public function replies()
@@ -29,5 +31,15 @@ class Ticket extends Model
     public function status()
     {
         return $this->belongsTo(Status::class);
+    }
+
+    public function priority()
+    {
+        return $this->belongsTo(Priority::class);
+    }
+
+    public function issue()
+    {
+        return $this->belongsTo(Issue::class);
     }
 }

@@ -28,12 +28,23 @@
         </div>
     </div>
 </div>
-<script>
+<script defer>
+    const formElement = document.getElementById('formElement');
+    const storeAction = formElement.action;
+
+    // if (!document.getElementById('elementModal').classList.has('show')) {
+    //     formElement.action = storeAction;
+    // }
+
+    window.addEventListener('load', function(){
+        $("#elementModal").on("hidden.bs.modal", function () {
+            formElement.action = storeAction;
+        });
+    });
+
     function showModalElement(e, editName = null, editId = null) {
         e.preventDefault();
-        console.log(formElement.action)
         if (editName && editId) {
-            const formElement = document.getElementById('formElement');
 
             formElement.action = `${formElement.action}/${editId}`
             document.getElementById('name').value = editName;

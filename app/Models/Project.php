@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
@@ -10,8 +11,6 @@ class Project extends Model
     use SoftDeletes;
 
     protected $guarded = ['id'];
-
-    // protected $with = ['user', 'status'];
 
     /**
      * Check if a projects collection is not empty and has projects in progress
@@ -35,19 +34,24 @@ class Project extends Model
     /**
      * Get only id and name in projects in progress
      *
-     * @param [type] $query
+     * @param Builder $query
      * @param integer $customerId
      * @return void
      */
-    public function scopeEssentialDataByCustomer($query, int $customerId)
+    public function scopeEssentialDataByCustomer(Builder $query, int $customerId)
     {
         return $query
             ->select('id', 'name')
-            ->where('user_id', $customerId)
+            ->where('customer_id', $customerId)
             ->where('status_id', '!=', 3)
             ->where('status_id', '!=', 4)
             ->get()
         ;
+    }
+
+    public function scopeMine(Builder $query)
+    {
+        return $query->where('customer_id', auth()->id());
     }
 
     // ATTRIBUTES
@@ -74,9 +78,14 @@ class Project extends Model
         return $this->hasMany(Ticket::class);
     }
 
-    public function user()
+    public function customer()
     {
-        return $this->belongsTo(User::class)->withTrashed();
+        return $this->belongsTo(User::class, 'customer_id')->withTrashed();
+    }
+
+    public function admin()
+    {
+        return $this->belongsTo(User::class, 'admin_id')->withTrashed();
     }
 
     public function status()

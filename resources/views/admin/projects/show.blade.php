@@ -18,7 +18,7 @@
                 <h2 class="display-2">{{ $project->name }}</h2>
             </div>
             <hr>
-            @if ($project->name)
+            @if ($project->news)
                 <div class="alert alert-info">
                     <h4 class="alert-heading">Information importante</h4>
                     <p>{{ $project->news }}</p>
@@ -27,7 +27,7 @@
             @endif
             <div class="row">
                 <div class="col-md-2">
-                    <p class="card-text"><a href="{{ route('admin.customers.show', $project->user )}}" class="text-info">{{$project->user->name}}</a></p>
+                    <p class="card-text"><a href="{{ route('admin.customers.show', $project->customer) }}" class="text-info">{{$project->customer->name}}</a></p>
                     <p class="card-text">{{$project->created_at->diffForHumans()}}</p>
                 </div>
                 <div class="col-md-10">

@@ -17,11 +17,11 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with(['user', 'status']);
+        $projects = Project::with(['customer', 'status']);
         if (request()->has('customers')) {
             if (request()->customers > 0) {
                 $searchData = request()->validate(['customers' => 'required|exists:users,id']);
-                $projects->where('user_id', $searchData['customers']);
+                $projects->where('customer_id', $searchData['customers']);
             }
 
             if (request()->status > 0) {
@@ -64,7 +64,8 @@ class ProjectController extends Controller
      */
     public function store(ProjectRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
+        $data['admin_id'] = auth()->id();
 
         Project::create($data);
 

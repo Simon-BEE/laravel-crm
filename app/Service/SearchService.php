@@ -14,7 +14,7 @@ class SearchService
      * @param string|array $attributes
      * @return void
      */
-    public function searchByKeywords(Builder $model, string $keywords, $attributes)
+    public function searchByKeywords(Builder $model, ?string $keywords, $attributes)
     {
         if (!is_null($keywords) && strlen($keywords) > 2) {
             foreach (explode(' ', $keywords) as $keyword) {

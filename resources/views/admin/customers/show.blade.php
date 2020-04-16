@@ -47,8 +47,8 @@
                     </div>
                 </div>
                 <div class="card-footer text-muted">
-                    @if (!$customer->knew)
-                        <a class="mr-2" href="{{ route('admin.customers.send_password', $customer) }}">
+                    @if (!$customer->changed)
+                        <a class="mr-2" href="{{ route('admin.customers.send_password', $customer) }}" title="Envoyer @if(!$customer->knew) le @else un nouveau @endif le mot de passe">
                             <i class="fas fa-key"></i>
                         </a>
                     @endif

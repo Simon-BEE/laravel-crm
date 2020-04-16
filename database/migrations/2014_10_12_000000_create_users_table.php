@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->boolean('changed')->default(false);
             $table->json('settings')->nullable();
             $table->rememberToken();
+            $table->timestamp('last_login_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

@@ -21,7 +21,7 @@ class CustomerController extends Controller
     {
         $users = User::customers();
         if (request()->has('rows')) {
-            \Search::searchByKeywords($users, request()->keywords, ['firstname', 'lastname']);
+            \Search::searchByKeywords($users, request()->keywords, ['firstname', 'lastname', 'email']);
 
             if (is_numeric(request()->rows) && request()->rows >= 10 && request()->rows <= 50) {
                 $perPage = request()->rows;
@@ -135,18 +135,21 @@ class CustomerController extends Controller
      */
     public function sendPassword(User $user)
     {
-        if (!$user->knew) {
-            $this->passwordToEmail($user);
+        $this->passwordToEmail($user);
+
+        if (!$user->changed) {
             $user->knew = true;
+            $user->changed = false;
             $user->save();
 
             $type = "success";
-            $message ="Un email content un mot de passe a bien été envoyé à $user->name.";
+            $message ="Un email contenant un mot de passe a bien été envoyé à $user->name.";
         }
+
 
         return redirect()->route('admin.customers.index')->with([
             'alertType' => $type ?? 'danger',
-            'alertMessage' => $message ?? "Le client $user->name a déjà reçu son mot de passe.",
+            'alertMessage' => $message ?? "Le client $user->name a déjà pris connaissance de son mot de passe.",
         ]);
     }
 

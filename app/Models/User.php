@@ -20,7 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'firstname', 'lastname', 'email',
         'password', 'role_id', 'address',
-        'knew', 'changed', 'settings',
+        'knew', 'changed', 'settings', 'last_login_at',
     ];
 
     /**
@@ -68,7 +68,7 @@ class User extends Authenticatable
 
     public function scopeCustomersWithProjects($query)
     {
-        $customers = $this->scopeCustomers($query)->with('projects')->get();
+        $customers = $this->scopeCustomers($query)->with(['projects'])->get();
         return $customers->filter(function($customer, $key){
             if ($customer->hasProjects) {
                 return $customer;
@@ -213,7 +213,7 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->hasMany(Project::class);
+        return $this->hasMany(Project::class, 'customer_id');
     }
 
     public function tickets()

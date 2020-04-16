@@ -107,6 +107,16 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function(){
 Route::middleware(['customer'])->prefix('customer')->name('customer.')->group(function(){
     Route::namespace('Customer')->group(function(){
         Route::get('/', 'DashboardController')->name('home');
+
+        // Projects
+        Route::group(['namespace' => 'Project'], function () {
+            Route::resource('projects', 'ProjectController')->only(['index', 'show']);
+        });
+
+        // Tickets
+        Route::group(['namespace' => 'Ticket'], function () {
+            Route::resource('tickets', 'TicketController');
+        });
     });
 
     // Account

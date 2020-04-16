@@ -38,6 +38,11 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function authenticated(\Illuminate\Http\Request $request, $user)
+    {
+        $user->update(['last_login_at' => now()]);
+    }
+
     protected function redirectTo()
     {
         if(auth()->user()->isAdmin){

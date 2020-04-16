@@ -35,7 +35,7 @@
                     <tr>
                         <th scope="row">{{ $project->id }}</th>
                         <td>{{ $project->name }}</td>
-                        <td><a href="{{ route('admin.customers.show', $project->user) }}" class="text-secondary">{{ $project->user->name }}</a></td>
+                        <td><a href="{{ route('admin.customers.show', $project->customer) }}" class="text-secondary">{{ $project->customer->name }}</a></td>
                         <td>{!! $project->actualStatus !!}</td>
                         <td class="">
                             <div class="dropdown">

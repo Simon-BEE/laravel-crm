@@ -51,7 +51,7 @@
             <div class="form-row">
                 <div class="col-auto my-1">
                     <label class="mr-sm-2" for="filter_keywords">Mots clés</label>
-                    <input type="text" class="form-control" name="keywords" id="filter_keywords" placeholder="Filtrer par mots clés...">
+                    <input type="text" class="form-control" name="keywords" id="filter_keywords" placeholder="Filtrer par mots clés..." value="{{ request()->keywords ?? '' }}">
                 </div>
             </div>
         </div>

@@ -24,7 +24,7 @@ class ProjectRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => 'required|exists:users,id',
+            'customer_id' => 'required|exists:users,id',
             'status_id' => 'required|exists:statuses,id',
             'name' => 'required|string|max:255',
             'news' => 'string|max:255',

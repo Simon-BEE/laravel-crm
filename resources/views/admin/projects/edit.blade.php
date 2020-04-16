@@ -41,13 +41,13 @@
             ])
 
             @include('includes.form.select', [
-                'name' => 'user_id',
+                'name' => 'customer_id',
                 'label' => 'Définir le client associé',
                 'collection' => $customers,
                 'helper' => "Si aucun client ne correspond, veuillez en <strong>créer un nouveau</strong> avant de procéder à la suite.",
                 'required' => true,
                 'selected' => true,
-                'property' => $project->user,
+                'property' => $project->customer,
             ])
 
             @include('includes.form.input', [

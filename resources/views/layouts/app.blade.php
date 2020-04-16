@@ -20,7 +20,9 @@
     </head>
     <body class="sb-nav-fixed">
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark shadow border-bottom border-dark">
-            <a class="navbar-brand" href="@admin {{ route('admin.home') }} @else {{ route('customer.home') }} @endadmin">SKYMON<span class="font-weight-bold">MANAGER</span> </a>
+            <a class="navbar-brand" href="@admin {{ route('admin.home') }} @else {{ route('customer.home') }} @endadmin">
+                SKYMON<span class="font-weight-bold">MANAGER</span>
+            </a>
             <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
                 <i class="fas fa-bars"></i>
             </button
@@ -38,9 +40,11 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="@admin {{ route('admin.settings.index') }} @else {{ route('customer.settings.index') }} @endadmin">Paramètres</a>
-                        <a class="dropdown-item" href="#">Journal des logs</a>
-                        <div class="dropdown-divider"></div>
+                        @admin
+                            <a class="dropdown-item" href="@admin {{ route('admin.settings.index') }} @else {{ route('customer.settings.index') }} @endadmin">Paramètres</a>
+                            <a class="dropdown-item" href="#">Journal des logs</a>
+                            <div class="dropdown-divider"></div>
+                        @endadmin
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">{{ __('Déconnexion') }}</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
@@ -181,6 +185,31 @@
                                     </nav>
                                 </div>
                                 <!-- -->
+                            @else
+                                <div class="sb-sidenav-menu-heading">Données</div>
+                                <!-- -->
+                                <a class="nav-link" href="{{ route('customer.projects.index') }}">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-project-diagram"></i>
+                                    </div>
+                                    Mes projets
+                                </a>
+                                <!-- -->
+                                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="fas fa-life-ring"></i>
+                                    </div>
+                                    Support
+                                    <div class="sb-sidenav-collapse-arrow">
+                                        <i class="fas fa-angle-down"></i>
+                                    </div>
+                                </a>
+                                <div class="collapse" id="collapseArchive" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+                                    <nav class="sb-sidenav-menu-nested nav">
+                                        <a class="nav-link" href="{{ route('customer.tickets.create') }}">Ouvrir un ticket</a>
+                                        <a class="nav-link" href="{{ route('customer.tickets.index') }}">Mes Tickets</a>
+                                    </nav>
+                                </div>
                             @endadmin
                             <div class="sb-sidenav-menu-heading">Compte</div>
                             <!-- -->

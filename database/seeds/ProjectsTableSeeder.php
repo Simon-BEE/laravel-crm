@@ -19,7 +19,8 @@ class ProjectsTableSeeder extends Seeder
         for ($i=0; $i < 30; $i++) {
             Project::create([
                 'name' => $faker->company,
-                'user_id' => mt_rand(2, 25),
+                'admin_id' => 1,
+                'customer_id' => mt_rand(2, 25),
                 'status_id' => mt_rand(1, 4),
                 'news' => $faker->sentence,
                 'body' => $faker->paragraphs(mt_rand(2, 8), true),

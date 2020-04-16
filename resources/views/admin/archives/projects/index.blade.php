@@ -29,14 +29,14 @@
                         <th scope="row">{{ $project->id }}</th>
                         <td>{{ $project->name }}</td>
                         <td>
-                            @if ($project->user->isDelete)
-                                {{ $project->user->name }}
+                            @if ($project->customer->isDelete)
+                                {{ $project->customer->name }}
                             @else
-                                <a href="{{ route('admin.customers.show', $project->user) }}" class="text-secondary">{{ $project->user->name }}</a>
+                                <a href="{{ route('admin.customers.show', $project->customer) }}" class="text-secondary">{{ $project->customer->name }}</a>
                             @endif
                         </td>
                         <td class="">
-                            @if ($project->user->isDelete)
+                            @if ($project->customer->isDelete)
                                 Aucune action disponible
                             @else
                                 <div class="dropdown">

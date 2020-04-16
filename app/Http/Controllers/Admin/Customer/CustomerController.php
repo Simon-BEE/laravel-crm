@@ -21,12 +21,15 @@ class CustomerController extends Controller
     {
         $users = User::customers();
         if (request()->has('rows')) {
+            \Search::searchByKeywords($users, request()->keywords, ['firstname', 'lastname']);
+
             if (is_numeric(request()->rows) && request()->rows >= 10 && request()->rows <= 50) {
                 $perPage = request()->rows;
             }
         }
 
         $users = $users->paginate($perPage ?? config('app.pagination'));
+        // dd($users);
 
         return view('admin.customers.index', compact('users'));
     }

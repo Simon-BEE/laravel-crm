@@ -29,6 +29,8 @@ class ProjectController extends Controller
                 $projects->where('status_id', $searchData['status']);
             }
 
+            \Search::searchByKeywords($projects, request()->keywords, ['name', 'news', 'body']);
+
             if (is_numeric(request()->rows) && request()->rows >= 10 && request()->rows <= 50) {
                 $perPage = request()->rows;
             }

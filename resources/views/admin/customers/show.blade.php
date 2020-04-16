@@ -108,5 +108,4 @@
 
 @endsection
 
-
 @include('includes.modal.delete-modal')

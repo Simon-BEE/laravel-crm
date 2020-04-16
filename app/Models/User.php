@@ -46,7 +46,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $softCascade = ['projects', 'tickets', 'replies', 'adresses'];
+    protected $softCascade = ['projects', 'tickets', 'replies', 'address'];
 
     protected static function boot(){
         parent::boot();
@@ -68,12 +68,17 @@ class User extends Authenticatable
 
     public function scopeCustomersWithProjects($query)
     {
-        return  $this->scopeCustomers($query)->with('projects');
+        $customers = $this->scopeCustomers($query)->with('projects')->get();
+        return $customers->filter(function($customer, $key){
+            if ($customer->hasProjects) {
+                return $customer;
+            }
+        });
     }
 
     public function scopeCustomersWithAddressAndProjects($query)
     {
-        $customers = $this->scopeCustomersWithProjects($query)->get();
+        $customers = $this->scopeCustomersWithProjects($query);
         return $customers->filter(function($customer, $key){
             if ($customer->hasAddress && $customer->hasProjectsInProgress) {
                 return $customer;
@@ -121,6 +126,16 @@ class User extends Authenticatable
     public function getHasAddressAttribute()
     {
         return $this->address->address_1 ? true : false;
+    }
+
+    /**
+     * Check if user has project(s) in progress
+     *
+     * @return bool
+     */
+    public function getHasProjectsAttribute()
+    {
+        return $this->projects->isNotEmpty();
     }
 
     /**
@@ -211,9 +226,14 @@ class User extends Authenticatable
         return $this->hasMany(Reply::class);
     }
 
-    public function estimates()
+    public function customerEstimates()
     {
-        return $this->hasMany(Estimate::class);
+        return $this->hasMany(Estimate::class, 'customer_id');
+    }
+
+    public function adminEstimates()
+    {
+        return $this->hasMany(Estimate::class, 'admin_id');
     }
 
     public function customerInvoices()

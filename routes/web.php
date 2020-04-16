@@ -31,6 +31,7 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function(){
         // Projects
         Route::group(['namespace' => 'Project'], function () {
             Route::resource('projects', 'ProjectController');
+            // Route::post('projects', 'ProjectController@index')->name('projects.search');
         });
 
         // Documents
@@ -51,20 +52,23 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function(){
                 ->except(['show']);
         });
 
-        // Priority
-        Route::group(['namespace' => 'Priority'], function () {
-            Route::get('priorities', 'PriorityController@index')->name('priorities.index');
-            Route::post('priorities', 'PriorityController@storeOrUpdate')->name('priorities.store');
-            Route::patch('priorities/{priority}', 'PriorityController@storeOrUpdate')->name('priorities.update');
-            Route::delete('priorities/{priority}', 'PriorityController@destroy')->name('priorities.destroy');
-        });
+        // Tickets
+        Route::group(['prefix' => 'tickets'], function(){
+            // Priority
+            Route::group(['namespace' => 'Priority'], function () {
+                Route::get('priorities', 'PriorityController@index')->name('priorities.index');
+                Route::post('priorities', 'PriorityController@storeOrUpdate')->name('priorities.store');
+                Route::patch('priorities/{priority}', 'PriorityController@storeOrUpdate')->name('priorities.update');
+                Route::delete('priorities/{priority}', 'PriorityController@destroy')->name('priorities.destroy');
+            });
 
-        // Issue
-        Route::group(['namespace' => 'Issue'], function () {
-            Route::get('issues', 'IssueController@index')->name('issues.index');
-            Route::post('issues', 'IssueController@storeOrUpdate')->name('issues.store');
-            Route::patch('issues/{issue}', 'IssueController@storeOrUpdate')->name('issues.update');
-            Route::delete('issues/{issue}', 'IssueController@destroy')->name('issues.destroy');
+            // Issue
+            Route::group(['namespace' => 'Issue'], function () {
+                Route::get('issues', 'IssueController@index')->name('issues.index');
+                Route::post('issues', 'IssueController@storeOrUpdate')->name('issues.store');
+                Route::patch('issues/{issue}', 'IssueController@storeOrUpdate')->name('issues.update');
+                Route::delete('issues/{issue}', 'IssueController@destroy')->name('issues.destroy');
+            });
         });
 
         // Archives

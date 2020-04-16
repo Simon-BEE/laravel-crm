@@ -17,9 +17,28 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::with(['user', 'status'])->paginate(config('app.pagination'));
+        $projects = Project::with(['user', 'status']);
+        if (request()->has('customers')) {
+            if (request()->customers > 0) {
+                $searchData = request()->validate(['customers' => 'required|exists:users,id']);
+                $projects->where('user_id', $searchData['customers']);
+            }
 
-        return view('admin.projects.index', compact('projects'));
+            if (request()->status > 0) {
+                $searchData = request()->validate(['status' => 'required|exists:statuses,id']);
+                $projects->where('status_id', $searchData['status']);
+            }
+
+            if (is_numeric(request()->rows) && request()->rows >= 10 && request()->rows <= 50) {
+                $perPage = request()->rows;
+            }
+        }
+
+        $projects = $projects->paginate($perPage ?? config('app.pagination'));
+        $customers = User::customersWithProjects();
+        $statuses = Status::all();
+
+        return view('admin.projects.index', compact('projects', 'customers', 'statuses'));
     }
 
     /**

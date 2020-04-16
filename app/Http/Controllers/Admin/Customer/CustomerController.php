@@ -19,7 +19,14 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $users = User::customers()->paginate(config('app.pagination'));
+        $users = User::customers();
+        if (request()->has('rows')) {
+            if (is_numeric(request()->rows) && request()->rows >= 10 && request()->rows <= 50) {
+                $perPage = request()->rows;
+            }
+        }
+
+        $users = $users->paginate($perPage ?? config('app.pagination'));
 
         return view('admin.customers.index', compact('users'));
     }

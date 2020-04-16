@@ -29,6 +29,7 @@ Projet personnel qui a pour objectif de créer une structure permettant de gére
 
 - [ ] Settings colors
 - [ ] Tickets
+- [ ] Logs
 - [ ] Table filters (lines number, by status or price)
 - [ ] Table orders (alphabet)
 - [ ] Multiple selection in table to do an action - [google search](https://www.google.com/search?client=firefox-b-e&sxsrf=ALeKk022PrRiKw5He8EohHca_CY5FJ7ogw%3A1586789296767&ei=sHuUXvDALqmajLsPk5-98AY&q=laravel+checkbox+table&oq=laravel+checkbox+table&gs_lcp=CgZwc3ktYWIQAzIGCAAQFhAeOgQIABBHOgQIIxAnOgYIIxAnEBM6BQgAEIMBOgQIABBDOgIIADoHCAAQFBCHAjoFCAAQywFKKwgXEicwZzkxZzIwNGcxMDNnOTNnOThnODdnODFnODRnOTBnOTNnOTFnNTlKHQgYEhkwZzFnMWcxZzFnMWcxZzFnMWcxZzVnNWc1UNrGAViv4AFg4uQBaABwAngAgAHCAYgBnQ-SAQQyMC4ymAEAoAEBqgEHZ3dzLXdpeg&sclient=psy-ab&ved=0ahUKEwjw2Pfi0uXoAhUpDWMBHZNPD24Q4dUDCAs&uact=5)

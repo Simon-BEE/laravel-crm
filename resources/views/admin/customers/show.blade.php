@@ -70,20 +70,39 @@
 
     <div class="row justify-content-center">
         <div class="col-md-6 my-4">
-            <h3 class="h3">Factures</h3>
-            @if ($customer->customerInvoices->isEmpty())
-                <p class="text-center">Ce client n'a aucune facture.</p>
-            @else
-                <div class="list-group">
-                    @foreach ($customer->customerInvoices as $invoice)
-                        <a href="{{ asset('storage/invoices/' . $invoice->file ) }}" target="_blank" class="list-group-item list-group-item-action d-flex justify-content-around align-items-center">
-                            <strong>Facture n°{{ $invoice->invoice_id }}</strong>
-                            <p class="m-0">{!! $invoice->itsStatus !!}</p>
-                            <p class="m-0">Montant: <span class="text-info">{{ Formats::formatPrice($invoice->amount) }}</span></p>
-                        </a>
-                    @endforeach
-                </div>
-            @endif
+            <div class="mb-2">
+                <h3 class="h3">Devis</h3>
+                @if ($customer->customerEstimates->isEmpty())
+                    <p class="text-center">Ce client n'a aucun devis.</p>
+                @else
+                    <div class="list-group">
+                        @foreach ($customer->customerEstimates as $estimate)
+                            <a href="{{ asset('storage/estimates/' . $estimate->file ) }}" target="_blank" class="list-group-item list-group-item-action d-flex justify-content-around align-items-center">
+                                <strong>Facture n°{{ $estimate->estimate_id }}</strong>
+                                <p class="m-0">{!! $estimate->itsStatus !!}</p>
+                                <p class="m-0">Montant: <span class="text-info">{{ Formats::formatPrice($estimate->amount) }}</span></p>
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+
+            <div class="my-5">
+                <h3 class="h3">Factures</h3>
+                @if ($customer->customerInvoices->isEmpty())
+                    <p class="text-center">Ce client n'a aucune facture.</p>
+                @else
+                    <div class="list-group">
+                        @foreach ($customer->customerInvoices as $invoice)
+                            <a href="{{ asset('storage/invoices/' . $invoice->file ) }}" target="_blank" class="list-group-item list-group-item-action d-flex justify-content-around align-items-center">
+                                <strong>Facture n°{{ $invoice->invoice_id }}</strong>
+                                <p class="m-0">{!! $invoice->itsStatus !!}</p>
+                                <p class="m-0">Montant: <span class="text-info">{{ Formats::formatPrice($invoice->amount) }}</span></p>
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 

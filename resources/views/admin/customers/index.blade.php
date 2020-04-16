@@ -10,9 +10,15 @@
 
 @section('content')
 
+    <div class="my-2">
+        @include('includes.filter')
+    </div>
+
     <div class="row justify-content-between align-items-center mb-2">
         <h3 class="h2">Liste des clients</h3>
-        <a href="{{ route('admin.customers.create') }}" class="btn btn-info">Ajouter un nouveau client</a>
+        <div>
+            <a href="{{ route('admin.customers.create') }}" class="btn btn-info">Ajouter un nouveau client</a>
+        </div>
     </div>
     <div class="row">
         <table class="table table-hover table-striped">

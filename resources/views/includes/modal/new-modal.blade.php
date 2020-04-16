@@ -32,10 +32,6 @@
     const formElement = document.getElementById('formElement');
     const storeAction = formElement.action;
 
-    // if (!document.getElementById('elementModal').classList.has('show')) {
-    //     formElement.action = storeAction;
-    // }
-
     window.addEventListener('load', function(){
         $("#elementModal").on("hidden.bs.modal", function () {
             formElement.action = storeAction;

@@ -10,10 +10,15 @@
 
 @section('content')
 
+    <div class="my-2">
+        @include('includes.filter', ['statuses' => $statuses, 'customers' => $customers])
+    </div>
+
     <div class="row justify-content-between align-items-center mb-2">
         <h3 class="h2">Liste des projets</h3>
         <a href="{{ route('admin.projects.create') }}" class="btn btn-info">Ajouter un nouveau projet</a>
     </div>
+
     <div class="row">
         <table class="table table-hover table-striped">
             <thead class="thead-dark">

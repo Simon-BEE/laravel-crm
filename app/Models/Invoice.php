@@ -20,6 +20,11 @@ class Invoice extends Model
         return "<span class=\"badge badge-" . $this->status->color->name . "\"> " . $this->status->name . "</span>";
     }
 
+    public function getDocumentIdAttribute()
+    {
+        return $this->invoice_id;
+    }
+
     // RELATIONS
 
     public function admin()

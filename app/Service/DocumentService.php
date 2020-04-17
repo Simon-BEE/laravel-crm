@@ -4,9 +4,10 @@ namespace App\Service;
 
 use Carbon\Carbon;
 use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use LaravelDaily\Invoices\Invoice;
 use App\Models\Invoice as InvoiceModel;
-use Illuminate\Support\Facades\DB;
 use LaravelDaily\Invoices\Classes\Party;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
 
@@ -67,7 +68,7 @@ class DocumentService
             ->date($issueDate)
             ->dateFormat('d/m/Y')
             ->payUntilDays($issueDate->diffInDays($dueDate))
-            ->filename(($estimate ? 'D-' : 'F-') . $fileName)
+            ->filename(($estimate ? 'D-' : 'F-') . $fileName . '-' . Str::random())
             ->addItems($items)
             ->taxRate(20)
             ->template($estimate ? 'estimate' : 'invoice')

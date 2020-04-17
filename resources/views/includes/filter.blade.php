@@ -2,6 +2,7 @@
 <form action="" method="get" class="collapse" id="collapseFilterPanel">
     <div class="row my-2 p-3 bg-light align-items-end justify-content-end">
         {{-- Rows --}}
+        @isset($rows)
         <div class="col-md-2">
             <div class="form-row">
                 <div class="col-auto my-1">
@@ -14,6 +15,7 @@
                 </div>
             </div>
         </div>
+        @endisset
         {{-- Status --}}
         @isset ($statuses)
             <div class="col-md-2">
@@ -52,10 +54,10 @@
             <div class="form-row">
                 <div class="col-auto my-1">
                     @php
-                        $default = request()->range ?? 1000;
+                        $default = request()->range ?? 0;
                     @endphp
                     <label for="rangePrice" class="mb-sm-4">Montant minimum <small class="text-muted"><span id="rangePriceLabel">{{ $default }}</span>€</small></label>
-                    <input type="range" class="form-control-range" name="range" id="rangePrice" min="100" max="10000" step="100" value="{{ $default }}" title="{{ $default }}">
+                    <input type="range" class="form-control-range" name="range" id="rangePrice" min="0" max="10000" step="100" value="{{ $default }}" title="{{ $default }}">
                 </div>
             </div>
         </div>
@@ -69,8 +71,9 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-1 row">
             <button type="submit" class="btn btn-dark">Filtrer</button>
+            <a href="{{ route(Route::currentRouteName()) }}" class="btn btn-light" title="Réinitialiser"><i class="fas fa-undo-alt"></i></a>
         </div>
     </div>
 </form>

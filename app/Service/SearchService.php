@@ -3,29 +3,41 @@
 namespace App\Service;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Arr;
 
 class SearchService
 {
-    public function searchByCustomer(Builder $model, int $customerId)
+    /**
+     * Search by customer id
+     *
+     * @param mixed $models
+     * @param integer $customerId
+     * @return void
+     */
+    public function searchByCustomer($models, int $customerId)
     {
         if ($customerId > 0) {
             $searchData = request()->validate(['customers' => 'required|exists:users,id']);
-            $model->where('customer_id', $searchData['customers']);
+            foreach (Arr::wrap($models) as $model) {
+                $model->where('customer_id', $searchData['customers']);
+            }
         }
     }
     /**
      * Search some keywords in database
      *
-     * @param Builder $model
+     * @param mixed $models
      * @param string $keywords
      * @param string|array $attributes
      * @return void
      */
-    public function searchByKeywords(Builder $model, ?string $keywords, $attributes)
+    public function searchByKeywords($models, ?string $keywords, $attributes)
     {
         if (!is_null($keywords) && strlen($keywords) > 2) {
-            foreach (explode(' ', $keywords) as $keyword) {
-                $model->whereLike($attributes, $keyword);
+            foreach (Arr::wrap($models) as $model) {
+                foreach (explode(' ', $keywords) as $keyword) {
+                    $model->whereLike($attributes, $keyword);
+                }
             }
         }
     }
@@ -33,31 +45,35 @@ class SearchService
     /**
      * Search by status
      *
-     * @param Builder $model
+     * @param mixed $models
      * @param integer $status
      * @return void
      */
-    public function searchByStatus(Builder $model, int $statusId)
+    public function searchByStatus($models, int $statusId)
     {
         if ($statusId > 0) {
             $searchData = request()->validate(['status' => 'required|exists:statuses,id']);
-            $model->where('status_id', $searchData['status']);
+            foreach (Arr::wrap($models) as $model) {
+                $model->where('status_id', $searchData['status']);
+            }
         }
     }
 
     /**
      * Search by range amount between $min and $max
      *
-     * @param Builder $model
+     * @param mixed $models
      * @param integer $range
      * @param integer $min
      * @param integer $max
      * @return void
      */
-    public function searchBetweenByRange(Builder $model, $range, int $min = 100, int $max = 10000)
+    public function searchBetweenByRange($models, $range, int $min = 100, int $max = 10000)
     {
         if (is_numeric($range) && $range > $min && $range < $max) {
-            $model->where('amount', '>', $range);
+            foreach (Arr::wrap($models) as $model) {
+                $model->where('amount', '>', $range);
+            }
         }
     }
 }

@@ -115,6 +115,13 @@ Route::middleware(['customer'])->prefix('customer')->name('customer.')->group(fu
             Route::resource('projects', 'ProjectController')->only(['index', 'show']);
         });
 
+        // Documents
+        Route::group(['namespace' => 'Document'], function () {
+            Route::get('documents', 'DocumentController@index')->name('documents.index');
+            Route::get('documents/invoices/{document}', 'DocumentController@showInvoice')->name('documents.show.invoice');
+            Route::get('documents/estimates/{document}', 'DocumentController@showEstimate')->name('documents.show.estimate');
+        });
+
         // Tickets
         Route::group(['namespace' => 'Ticket'], function () {
             Route::resource('tickets', 'TicketController');

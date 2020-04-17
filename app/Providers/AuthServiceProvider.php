@@ -31,5 +31,9 @@ class AuthServiceProvider extends ServiceProvider
         Auth::provider('cache-user', function() {
             return resolve(CacheUserProvider::class);
         });
+
+        Gate::define('show-document', function ($user, $model) {
+            return $user->id === $model->customer_id;
+        });
     }
 }

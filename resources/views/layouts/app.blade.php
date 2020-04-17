@@ -195,6 +195,13 @@
                                     Mes projets
                                 </a>
                                 <!-- -->
+                                <a class="nav-link" href="{{ route('customer.documents.index') }}">
+                                    <div class="sb-nav-link-icon">
+                                        <i class="far fa-copy"></i>
+                                    </div>
+                                    Mes documents
+                                </a>
+                                <!-- -->
                                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive">
                                     <div class="sb-nav-link-icon">
                                         <i class="fas fa-life-ring"></i>

@@ -41,6 +41,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $dates = ['last_login_at'];
+
     /**
      * The relations must be deleted in cascade with softDeleting.
      *

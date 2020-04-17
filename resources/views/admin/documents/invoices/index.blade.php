@@ -10,7 +10,7 @@ Liste des factures
 
 @section('content')
         <div class="my-2">
-            @include('includes.filter', ['statuses' => $statuses, 'price' => true])
+            @include('includes.filter', ['statuses' => $statuses, 'price' => true, 'rows' => true])
         </div>
         <div class="row justify-content-between align-items-center mb-2">
             <h3 class="h2">Liste des factures</h3>

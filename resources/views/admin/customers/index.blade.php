@@ -11,7 +11,7 @@
 @section('content')
 
     <div class="my-2">
-        @include('includes.filter')
+        @include('includes.filter', ['rows' => true])
     </div>
 
     <div class="row justify-content-between align-items-center mb-2">
@@ -29,6 +29,7 @@
                     <th scope="col">Nom</th>
                     <th scope="col">Adresse email</th>
                     <th scope="col">Adresse</th>
+                    <th scope="col">Dernière connexion</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -39,6 +40,7 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->partialAddress }}</td>
+                        <td>{{ $user->last_login_at ? $user->last_login_at->format('d/m/Y H:i') : "Jamais" }}</td>
                         <td class="">
                             <div class="dropdown">
                                 <button class="btn btn-link text-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

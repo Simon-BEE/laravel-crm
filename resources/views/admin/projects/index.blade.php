@@ -11,7 +11,7 @@
 @section('content')
 
     <div class="my-2">
-        @include('includes.filter', ['statuses' => $statuses, 'customers' => $customers])
+        @include('includes.filter', ['statuses' => $statuses, 'customers' => $customers, 'rows' => true])
     </div>
 
     <div class="row justify-content-between align-items-center mb-2">

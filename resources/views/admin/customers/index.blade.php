@@ -18,6 +18,7 @@
         <h3 class="h2">Liste des clients</h3>
         <div>
             <a href="{{ route('admin.customers.create') }}" class="btn btn-info">Ajouter un nouveau client</a>
+            <a href="{{ route('admin.customers.export.all') }}" target="_blank" class="btn btn-warning"><i class="fas fa-file-export"></i> Export</a>
         </div>
     </div>
     <div class="row">
@@ -56,6 +57,10 @@
                                     </a>
                                     <a class="dropdown-item" href="{{ route('admin.customers.edit', $user) }}">
                                         <i class="fas fa-paint-brush"></i> <span class="ml-3">Editer</span>
+                                    </a>
+                                    <a class="dropdown-item" href="{{ route('admin.customers.export.customer', $user) }}" target="_blank">
+                                        <i class="fas fa-file-export"></i>
+                                        <span class="ml-3">Export</span>
                                     </a>
                                     <form action="{{ route('admin.customers.destroy', $user) }}" method="post" class="dropdown-item" onsubmit="confirmAction(event)">
                                         @csrf

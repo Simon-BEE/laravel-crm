@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Admin\Customer;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Exports\UserExport;
+use App\Exports\UsersExport;
 use App\Mail\SendPasswordMail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Requests\EditUserRequest;
 use App\Http\Requests\CreateCustomerRequest;
 
@@ -124,6 +127,24 @@ class CustomerController extends Controller
             'alertType' => 'success',
             'alertMessage' => "Le client $customer->name a bien été supprimé.",
         ]);
+    }
+
+    /**
+     * Export all users in CSV format
+     *
+     * @return Excel
+     */
+    public function exportAll()
+    {
+        return Excel::download(new UsersExport, 'allUsers.csv', \Maatwebsite\Excel\Excel::CSV);
+        // return Excel::download(new UsersExport, 'allUsers.html', \Maatwebsite\Excel\Excel::HTML);
+        // return Excel::download(new UsersExport, 'allUsers.pdf', \Maatwebsite\Excel\Excel::DOMPDF);
+    }
+
+    public function exportCustomer(User $customer)
+    {
+        $filename = "customer-$customer->id". "-" ."$customer->lastname.csv";
+        return Excel::download(new UserExport($customer->id), $filename, \Maatwebsite\Excel\Excel::CSV);
     }
 
     /**

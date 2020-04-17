@@ -48,13 +48,16 @@
                 </div>
                 <div class="card-footer text-muted">
                     @if (!$customer->changed)
-                        <a class="mr-2" href="{{ route('admin.customers.send_password', $customer) }}" title="Envoyer @if(!$customer->knew) le @else un nouveau @endif le mot de passe">
+                        <a class="mr-2 text-warning" href="{{ route('admin.customers.send_password', $customer) }}" title="Envoyer @if(!$customer->knew) le @else un nouveau @endif le mot de passe">
                             <i class="fas fa-key"></i>
                         </a>
                     @endif
 
                     <a class="mr-2" href="{{ route('admin.customers.edit', $customer) }}">
                         <i class="fas fa-paint-brush"></i>
+                    </a>
+                    <a class="mr-2 text-secondary" href="{{ route('admin.customers.export.customer', $customer) }}" target="_blank">
+                        <i class="fas fa-file-export"></i>
                     </a>
                     <form action="{{ route('admin.customers.destroy', $customer) }}" method="post" class="d-inline-block" onsubmit="confirmAction(event)">
                         @csrf

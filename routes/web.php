@@ -24,8 +24,10 @@ Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function(){
 
         // Customers
         Route::group(['namespace' => 'Customer'], function () {
-            Route::resource('customers', 'CustomerController');
+            Route::get('customers/export', 'CustomerController@exportAll')->name('customers.export.all');
+            Route::get('customers/export/{customer}', 'CustomerController@exportCustomer')->name('customers.export.customer');
             Route::get('customers/{user}/password', 'CustomerController@sendPassword')->name('customers.send_password');
+            Route::resource('customers', 'CustomerController');
         });
 
         // Projects

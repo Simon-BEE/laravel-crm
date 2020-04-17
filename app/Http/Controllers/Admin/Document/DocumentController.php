@@ -84,7 +84,7 @@ class DocumentController extends Controller
      */
     protected function customerHasThisProject(int $customerId, int $projectId)
     {
-        if (Project::find($projectId)->user->id == $customerId) {
+        if (Project::find($projectId)->customer->id == $customerId) {
             return true;
         }
 

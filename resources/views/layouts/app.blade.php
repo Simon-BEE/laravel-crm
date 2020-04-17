@@ -292,5 +292,6 @@
         <script src="{{ asset('js/scripts.js') }}"></script>
         @yield('modal')
         @yield('javascript')
+        @yield('javascript-filter')
     </body>
 </html>

@@ -46,6 +46,20 @@
                 </div>
             </div>
         @endisset
+        {{-- Range price --}}
+        @isset($price)
+        <div class="col-md-2">
+            <div class="form-row">
+                <div class="col-auto my-1">
+                    @php
+                        $default = request()->range ?? 1000;
+                    @endphp
+                    <label for="rangePrice" class="mb-sm-4">Montant minimum <small class="text-muted"><span id="rangePriceLabel">{{ $default }}</span>€</small></label>
+                    <input type="range" class="form-control-range" name="range" id="rangePrice" min="100" max="10000" step="100" value="{{ $default }}" title="{{ $default }}">
+                </div>
+            </div>
+        </div>
+        @endisset
         {{-- Keywords --}}
         <div class="col-md-2">
             <div class="form-row">
@@ -65,11 +79,19 @@
     <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseFilterPanel" aria-expanded="false" aria-controls="collapseFilterPanel" id="btnFilterPanel">Filtrer les résultats</button>
 </div>
 
-@section('javascript')
+@section('javascript-filter')
     <script>
         $("#collapseFilterPanel").on("show.bs.collapse", function () {
             document.getElementById('btnFilterPanel').setAttribute('disabled', 'true');
         });
+
+        const rangeInput = document.getElementById('rangePrice')
+        if (rangeInput) {
+            rangeInput.addEventListener('change', function(){
+                this.title = this.value;
+                document.getElementById('rangePriceLabel').innerText = this.value;
+            });
+        }
     </script>
 @endsection
 

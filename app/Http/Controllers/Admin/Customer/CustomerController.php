@@ -29,7 +29,6 @@ class CustomerController extends Controller
         }
 
         $users = $users->paginate($perPage ?? config('app.pagination'));
-        // dd($users);
 
         return view('admin.customers.index', compact('users'));
     }

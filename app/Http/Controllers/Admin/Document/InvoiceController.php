@@ -19,9 +19,21 @@ class InvoiceController extends DocumentController
      */
     public function index()
     {
-        $invoices = Invoice::where('admin_id', auth()->id())->latest()->paginate(config('app.pagination'));
-        $status = Status::all();
-        return view('admin.documents.invoices.index', compact('invoices', 'status'));
+        $invoices = Invoice::where('admin_id', auth()->id());
+        if (request()->has('rows')) {
+            \Search::searchByKeywords($invoices, request()->keywords, ['items', 'file', 'customer.firstname', 'customer.lastname']);
+
+            \Search::searchBetweenByRange($invoices, request()->range);
+
+            \Search::searchByStatus($invoices, request()->status);
+
+            if (is_numeric(request()->rows) && request()->rows >= 10 && request()->rows <= 50) {
+                $perPage = request()->rows;
+            }
+        }
+        $invoices = $invoices->latest()->paginate(config('app.pagination'));
+        $statuses = Status::all();
+        return view('admin.documents.invoices.index', compact('invoices', 'statuses'));
     }
 
     /**

@@ -19,15 +19,9 @@ class ProjectController extends Controller
     {
         $projects = Project::with(['customer', 'status']);
         if (request()->has('customers')) {
-            if (request()->customers > 0) {
-                $searchData = request()->validate(['customers' => 'required|exists:users,id']);
-                $projects->where('customer_id', $searchData['customers']);
-            }
+            \Search::searchByCustomer($projects, request()->customers);
 
-            if (request()->status > 0) {
-                $searchData = request()->validate(['status' => 'required|exists:statuses,id']);
-                $projects->where('status_id', $searchData['status']);
-            }
+            \Search::searchByStatus($projects, request()->status);
 
             \Search::searchByKeywords($projects, request()->keywords, ['name', 'news', 'body']);
 

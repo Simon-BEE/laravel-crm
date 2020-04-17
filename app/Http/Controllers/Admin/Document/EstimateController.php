@@ -18,9 +18,22 @@ class EstimateController extends DocumentController
      */
     public function index()
     {
-        $estimates = Estimate::where('admin_id', auth()->id())->latest()->paginate(config('app.pagination'));
-        $status = Status::all();
-        return view('admin.documents.estimates.index', compact('estimates', 'status'));
+        $estimates = Estimate::where('admin_id', auth()->id());
+        if (request()->has('rows')) {
+            \Search::searchByKeywords($estimates, request()->keywords, ['items', 'file', 'customer.firstname', 'customer.lastname']);
+
+            \Search::searchBetweenByRange($estimates, request()->range);
+
+            \Search::searchByStatus($estimates, request()->status);
+
+            if (is_numeric(request()->rows) && request()->rows >= 10 && request()->rows <= 50) {
+                $perPage = request()->rows;
+            }
+        }
+
+        $estimates = $estimates->latest()->paginate($perPage ?? config('app.pagination'));
+        $statuses = Status::all();
+        return view('admin.documents.estimates.index', compact('estimates', 'statuses'));
     }
 
     /**

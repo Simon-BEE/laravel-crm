@@ -9,10 +9,13 @@ Liste des devis
 @endsection
 
 @section('content')
-            <div class="row justify-content-between align-items-center mb-2">
-                <h3 class="h2">Liste des devis</h3>
-                <a href="{{ route('admin.invoices.create') }}" class="btn btn-info">Créer un nouveau devis</a>
-            </div>
+        <div class="my-2">
+            @include('includes.filter', ['statuses' => $statuses, 'price' => true])
+        </div>
+        <div class="row justify-content-between align-items-center mb-2">
+            <h3 class="h2">Liste des devis</h3>
+            <a href="{{ route('admin.invoices.create') }}" class="btn btn-info">Créer un nouveau devis</a>
+        </div>
         <div class="row">
             <table class="table table-hover">
                 <thead class="thead-dark">
@@ -68,7 +71,7 @@ Liste des devis
                     @include('includes.form.select', [
                         'name' => 'status_id',
                         'label' => 'Choisir un nouveau statut',
-                        'collection' => $status,
+                        'collection' => $statuses,
                         'helper' => null,
                         'required' => true,
                         'selected' => null,
